@@ -1,15 +1,13 @@
 import json
 import sys
-from pprint import pprint
 
 def main(args):
     try:
         with open("appinspect_result.json") as f:
             result = json.load(f)
-            pprint(result)
             if "summary" in result and "failure" in result["summary"]:
                 failures = result["summary"]["failure"]
-                if failures != 0:
+                if failures == 0:
                     print("No Failures")
                     print("::set-output name=status::success")
                 else:
