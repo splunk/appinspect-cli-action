@@ -16,10 +16,6 @@ This action runs Splunk's AppInspect CLI against a provided a directory of a SPl
 
 ## Example usage
 
-uses: actions/hello-world-docker-action@v1
-with:
-  who-to-greet: 'Mona the Octocat'
-
 ```yml
 uses: dshomoye/splunk-appinspect@master
 with:
