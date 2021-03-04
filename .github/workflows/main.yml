@@ -9,11 +9,11 @@ jobs:
       # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v2
-      - name: App Inspect Step
+      - name: App Inspect
         uses: ./ # Uses an action in the root directory
         id: app_inspect
         with:
           app-path: 'test'
       # Use the output from the `hello` step
-      - name: Get the status
+      - name: Get Inspect status
         run: echo "The time was ${{ steps.app_inspect.outputs.status }}"
