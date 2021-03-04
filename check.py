@@ -8,7 +8,8 @@ def main(args):
             if result["status"] == "SUCCESS":
                 print("::set-output name=status::success")
             print("::set-output name=time::fail")
-    except:
+    except Exception as e:
+        print(f"error occured {str(e)}")
         sys.exit(1)
 
 
