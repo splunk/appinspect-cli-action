@@ -16,3 +16,4 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.app-path }}
+    - ${{ inputs.result-file }}
