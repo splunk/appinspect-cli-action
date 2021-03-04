@@ -15,5 +15,5 @@ jobs:
         with:
           app-path: 'test'
       # Use the output from the `hello` step
-      - name: Get the output time
+      - name: Get the status
         run: echo "The time was ${{ steps.app_inspect.outputs.status }}"
