@@ -1,21 +1,27 @@
-# Hello world docker action
+# Splunk AppInspect action
 
-This action prints "Hello World" or "Hello" + the name of a person to greet to the log.
+This action runs Splunk's AppInspect CLI against a provided a directory of a SPlunk App. It fails it the result contains any failures.
 
 ## Inputs
 
-### `who-to-greet`
+### `app-path`
 
-**Required** The name of the person to greet. Default `"World"`.
+**Required**: The path to directory of the app in the working directory.
 
 ## Outputs
 
-### `time`
+### `status`:  
 
-The time we greeted you.
+`pass|fail`
 
 ## Example usage
 
 uses: actions/hello-world-docker-action@v1
 with:
   who-to-greet: 'Mona the Octocat'
+
+```yml
+uses: dshomoye/splunk-appinspect@master
+with:
+  app-path: 'test'
+```

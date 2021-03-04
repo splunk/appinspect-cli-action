@@ -16,6 +16,7 @@ def main(args):
                     sys.exit(1)
             else:
                 print("Unexpected JSON format")
+                print("::set-output name=time::fail")
                 sys.exit(1)
     except Exception as e:
         print(f"An error occured {str(e)}")
