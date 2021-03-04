@@ -1,16 +1,15 @@
 # action.yml
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Splunk AppInspect'
+description: 'Run Splunk App insect on a Splunk app directory.'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  app-path:
+    description: 'path to the application directory to be inspected'
     required: true
-    default: 'World'
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  status:
+    description: 'value is success/fail based on app inspect result'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.who-to-greet }}
+    - ${{ inputs.app-path }}

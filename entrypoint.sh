@@ -1,6 +1,4 @@
 #!/bin/sh -l
 
-echo "Hello $1"
-time=$(date)
-echo "::set-output name=time::$time"
-ls -ltr
+splunk-appinspect inspect $1 --output-file appinspect_result.json --mode precert
+python check.py
