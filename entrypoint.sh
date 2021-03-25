@@ -30,6 +30,14 @@ def main(args):
                 print(\"Unexpected JSON format\")
                 print(\"::set-output name=time::fail\")
                 sys.exit(1)
+
+            if \"summary\" in result and \"warning\" in result[\"summary\"]:
+                print(\"Warning List:\")
+                for group in result[\"reports\"][0][\"groups\"]:
+                    for check in group[\"checks\"]:
+                        if check[\"result\"]==\"warning\":
+                            for msg in check[\"messages\"]:
+                                print(msg[\"message\"])
     except Exception as e:
         print(f\"An error occured {str(e)}\")
         sys.exit(1)
