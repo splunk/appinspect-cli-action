@@ -13,10 +13,18 @@ def main(args):
                 failures = result[\"summary\"][\"failure\"]
                 if failures == 0:
                     print(\"App Inspect Passed!\")
+                    print(result[\"summary\"])
                     print(\"::set-output name=status::success\")
                 else:
                     print(f\"App Inspect returned {failures} failures.\")
                     print(\"::set-output name=time::fail\")
+                    print(result[\"summary\"])
+                    print(\"Failure List:\")
+                    for group in result[\"reports\"][0][\"groups\"]:
+                        for check in group[\"checks\"]:
+                            if check[\"result\"]==\"failure\":
+                                for msg in check[\"messages\"]:
+                                    print(msg[\"message\"])
                     sys.exit(1)
             else:
                 print(\"Unexpected JSON format\")
@@ -31,4 +39,3 @@ if __name__ == \"__main__\":
     main(sys.argv[1:])
 " > t.py
 python3 t.py
-
