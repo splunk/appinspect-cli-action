@@ -4,6 +4,7 @@ splunk-appinspect inspect $1 --output-file $2 --mode precert > /dev/null
 echo "
 import json
 import sys
+from pprint import pprint
 
 def main(args):
     try:
@@ -13,12 +14,19 @@ def main(args):
                 failures = result[\"summary\"][\"failure\"]
                 if failures == 0:
                     print(\"App Inspect Passed!\")
-                    print(result[\"summary\"])
-                    print(\"::set-output name=status::success\")
+                    if \"warning\" in result[\"summary\"] and result[\"summary\"][\"warning\"]:
+                        print(\"Warning List:\")
+                        for group in result[\"reports\"][0][\"groups\"]:
+                            for check in group[\"checks\"]:
+                                if check[\"result\"]==\"warning\":
+                                    for msg in check[\"messages\"]:
+                                        print(msg[\"message\"])
+                    pprint(result[\"summary\"])
+                    print(\"::set-output name=status::pass\")
                 else:
                     print(f\"App Inspect returned {failures} failures.\")
-                    print(\"::set-output name=time::fail\")
-                    print(result[\"summary\"])
+                    print(\"::set-output name=status::fail\")
+                    pprint(result[\"summary\"])
                     print(\"Failure List:\")
                     for group in result[\"reports\"][0][\"groups\"]:
                         for check in group[\"checks\"]:
@@ -28,7 +36,7 @@ def main(args):
                     sys.exit(1)
             else:
                 print(\"Unexpected JSON format\")
-                print(\"::set-output name=time::fail\")
+                print(\"::set-output name=status::fail\")
                 sys.exit(1)
     except Exception as e:
         print(f\"An error occured {str(e)}\")
