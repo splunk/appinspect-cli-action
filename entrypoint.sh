@@ -4,6 +4,7 @@ splunk-appinspect inspect $1 --output-file $2 --mode precert > /dev/null
 echo "
 import json
 import sys
+from pprint import pprint
 
 def main(args):
     try:
@@ -20,12 +21,12 @@ def main(args):
                                 if check[\"result\"]==\"warning\":
                                     for msg in check[\"messages\"]:
                                         print(msg[\"message\"])
-                    print(result[\"summary\"])
+                    pprint(result[\"summary\"])
                     print(\"::set-output name=status::pass\")
                 else:
                     print(f\"App Inspect returned {failures} failures.\")
                     print(\"::set-output name=status::fail\")
-                    print(result[\"summary\"])
+                    pprint(result[\"summary\"])
                     print(\"Failure List:\")
                     for group in result[\"reports\"][0][\"groups\"]:
                         for check in group[\"checks\"]:
