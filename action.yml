@@ -1,19 +1,22 @@
 # action.yml
-name: 'Splunk AppInspect'
-description: 'Run Splunk App insect on a Splunk app directory.'
+name: "Splunk AppInspect"
+description: "Run Splunk App insect on a Splunk app directory."
 inputs:
-  app-path:
-    description: 'path to the application directory to be inspected'
-    required: true
-  result-file:
-    description: 'json result file name'
-    default: 'appinspect_result.json'
+  app_path:
+    description: "path to the application directory to be inspected"
+    default: build/splunkbase
+  result_file:
+    description: "json result file name"
+    default: "appinspect_result.json"
+  included_tags:
+    description: "Tags to include"
+    required: false
+  excluded_tags:
+    description: "Tags to exclude"
+    required: false
 outputs:
   status:
-    description: 'value is success/fail based on app inspect result'
+    description: "value is success/fail based on app inspect result"
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.app-path }}
-    - ${{ inputs.result-file }}
+  using: "docker"
+  image: "docker://ghcr.io/splunk/appinspect-cli-action:v1.1.10"
