@@ -4,7 +4,7 @@ from pprint import pprint
 
 def main(args):
     try:
-        with open("$2") as f:
+        with open(args[0]) as f:
             result = json.load(f)
             if "summary" in result and "failure" in result["summary"]:
                 failures = result["summary"]["failure"]
@@ -40,4 +40,6 @@ def main(args):
 
 
 if __name__ == "__main__":
+    print(sys.argv[1:])
     main(sys.argv[1:])
+    
