@@ -1,1 +1,1 @@
-splunk-appinspect==2.5.3
+splunk-appinspect==2.6.0
