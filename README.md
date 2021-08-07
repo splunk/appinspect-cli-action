@@ -11,7 +11,7 @@ For a more comprehensive Splunk app testing workflow, visit the [`splunk/splunk-
 
 ## Inputs
 
-### `app-path`
+### `app_path`
 
 **Required**: The path to directory of the app in the working directory.
 
@@ -28,7 +28,7 @@ The file name to use for the json result.
 ## Example usage
 
 ```yml
-uses: splunk/appinspect-cli-action@master
+uses: splunk/appinspect-cli-action@main
 with:
-  app-path: 'test'
+  app_path: 'test'
 ```
