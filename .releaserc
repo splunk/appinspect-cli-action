@@ -13,7 +13,7 @@
         "@semantic-release/commit-analyzer",
         "@semantic-release/release-notes-generator",
         ["@semantic-release/exec", {
-            "prepareCmd": 'yq -i eval ".runs.image = \"docker://ghcr.io/$GITHUB_REPOSITORY:v${nextRelease.version}\"" action.yml'
+            "prepareCmd": 'yq -i eval ".runs.image = \"docker://ghcr.io/splunk/appinspect-cli-action/appinspect-cli-action:v${nextRelease.version}\"" action.yml'
         }],
         ["@semantic-release/git", {
             "assets": ["action.yml"],
