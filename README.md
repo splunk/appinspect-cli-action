@@ -28,7 +28,7 @@ The file name to use for the json result.
 ## Example usage
 
 ```yml
-uses: splunk/appinspect-cli-action@master
+uses: splunk/appinspect-cli-action@main
 with:
-  app-path: 'test'
+  app_path: 'test'
 ```
