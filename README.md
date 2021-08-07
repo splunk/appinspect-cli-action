@@ -11,7 +11,7 @@ For a more comprehensive Splunk app testing workflow, visit the [`splunk/splunk-
 
 ## Inputs
 
-### `app-path`
+### `app_path`
 
 **Required**: The path to directory of the app in the working directory.
 
