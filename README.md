@@ -33,7 +33,7 @@ with:
   app_path: 'test'
 ```
 
-## Section for Appinspect manual
+## Using manual tag
 Running appinspect with `manual` tag detects actions need to be verified manually and checks if all of them were already reviewd - if not the job will fail.
 ### manual checks review
 To see actions to be verified check the output from appinsepct job ran with manual tag. Verify manual checks and mark them as reviewed by adding them one by one into `.app-vetting.yaml`, ex:
