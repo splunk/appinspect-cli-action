@@ -34,7 +34,7 @@ with:
 ```
 
 ## Using manual tag
-Running appinspect with `manual` tag detects actions need to be verified manually and checks if all of them were already reviewd - if not the job will fail.
+Running `appinspect-cli-action` with `manual` tag in `included_tags` detects checks that need to be verified manually and tests if all of them were already reviewed - if not the action will fail.
 ### manual checks review
 To see actions to be verified check the output from appinsepct job ran with manual tag. Verify manual checks and mark them as reviewed by adding them one by one into `.app-vetting.yaml`, ex:
 ```
