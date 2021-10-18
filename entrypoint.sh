@@ -41,4 +41,12 @@ echo "::group::reporter"
 python3 /reporter.py $INPUT_RESULT_FILE
 test_exit_code=$?
 echo "::endgroup::"
+
+if [[ "$INPUT_INCLUDED_TAGS" == *"manual"* ]] && [ $test_exit_code == 0 ]; then
+  echo "::group::manual_checks"
+  python3 /compare_checks.py
+  test_exit_code=$?
+  echo "::endgroup::"
+fi
+
 exit "$test_exit_code"
