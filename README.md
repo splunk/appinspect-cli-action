@@ -33,9 +33,9 @@ with:
   app_path: 'test'
 ```
 
-# Section for Appinspect manual
+## Section for Appinspect manual
 Running appinspect with `manual` tag detects actions need to be verified manually and checks if all of them were already reviewd - if not the job will fail.
-## manual checks review
+### manual checks review
 To see actions to be verified check the output from appinsepct job ran with manual tag. Verify manual checks and mark them as reviewed by adding them one by one into `.app-vetting.yaml`, ex:
 ```
 name_of_manual_check_1:
@@ -44,9 +44,9 @@ name_of_manual_check_2:
   comment: 'your comment'
 ```
 please note that names of validated manual checks should be aligned with those from appinspect output and your comment can't be empty.
-## running the job
+### running the job
 When job is ran with manual tag it scans the package with appinspect and searches for manual checks. In next step compares appinspect's results with `.app-vetting.yaml` if any check wasn't reviewed and isn't in `.app-vetting.yaml` then the job fails.
-### downloading manual checks markdwon
+#### downloading manual checks markdwon
 If the comparison is successful then a markdown consisting a table with manual check names and comments is generated. It can be uploaded to artifacts.
 ```
 - name: upload-manual-check-markodown
