@@ -36,7 +36,7 @@ with:
 ## Using manual tag
 Running `appinspect-cli-action` with `manual` tag in `included_tags` detects checks that need to be verified manually and tests if all of them were already reviewed - if not the action will fail.
 ### manual checks review
-To see actions to be verified check the output from appinsepct job ran with manual tag. Verify manual checks and mark them as reviewed by adding them one by one into `.app-vetting.yaml`, ex:
+To see checks to be verified inspect the `result_file` from `appinspect-cli-action` run with manual tag. Verify manual checks and mark them as reviewed by adding them one by one into `.app-vetting.yaml`, ex:
 ```
 name_of_manual_check_1:
   comment: 'your comment'
