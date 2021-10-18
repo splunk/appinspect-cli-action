@@ -45,7 +45,7 @@ name_of_manual_check_2:
 ```
 please note that names of validated manual checks should be aligned with those from `result_file` and your comment can't be empty.
 ### running the job
-When job is ran with manual tag it scans the package with appinspect and searches for manual checks. In next step compares appinspect's results with `.app-vetting.yaml` if any check wasn't reviewed and isn't in `.app-vetting.yaml` then the job fails.
+When `appinspect-cli-action` is called with `manual` tag, it scans the package with Splunk's AppInspect CLI and searches for manual checks. In the next step, action compares `results_file` with `.app-vetting.yaml` if any check wasn't reviewed and isn't in `.app-vetting.yaml` then the job fails.
 #### downloading manual checks markdwon
 If the comparison is successful then a markdown consisting a table with manual check names and comments is generated. It can be uploaded to artifacts.
 ```
