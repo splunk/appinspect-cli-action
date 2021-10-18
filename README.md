@@ -32,3 +32,5 @@ uses: splunk/appinspect-cli-action@v1
 with:
   app_path: 'test'
 ```
+
+# Section for Appinspect manual
