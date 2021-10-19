@@ -37,11 +37,6 @@ splunk-appinspect inspect $SCAN --output-file $INPUT_RESULT_FILE --mode test $IN
 if [ ! -f $INPUT_RESULT_FILE ]; then echo no result file; exit 1; fi
 echo "::endgroup::"
 
-echo "::group::reporter"
-python3 /reporter.py $INPUT_RESULT_FILE
-test_exit_code=$?
-echo "::endgroup::"
-
 echo "Before manual"
 echo "test_exit_code $test_exit_code"
 echo "tags: $INPUT_INCLUDED_TAGS"
