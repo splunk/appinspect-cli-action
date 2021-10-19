@@ -50,6 +50,11 @@ if [[ "$INPUT_INCLUDED_TAGS" == *"manual"* ]] && [ $test_exit_code == 0 ]; then
   echo "/compare_checks.py $INPUT_APP_VETTING $INPUT_RESULT_FILE"
   python3 /compare_checks.py $INPUT_APP_VETTING $INPUT_RESULT_FILE
   test_exit_code=$?
+  if [ $test_exit_code == 0 ]; then
+    echo "successful comparison, generating markdown"
+    echo "/export_to_markdown.py $INPUT_APP_VETTING $INPUT_MANUAL_CHECK_MARKDOWN"
+    python3 /export_to_markdown.py $INPUT_APP_VETTING $INPUT_MANUAL_CHECK_MARKDOWN
+  fi
   echo "::endgroup::"
 fi
 
