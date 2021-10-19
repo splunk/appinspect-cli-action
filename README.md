@@ -19,6 +19,22 @@ For a more comprehensive Splunk app testing workflow, visit the [`splunk/splunk-
 The file name to use for the json result.
 `default`: `appinspect_result.json`
 
+### `included_tags`
+Appinspect tags to include
+`required`: `false`
+  
+### `excluded_tags`
+Appinspect tags to exclude
+`required`: `false`
+
+### `app_vetting`
+Path to app vetting yaml file. Used only if `manual` in `included_tags`
+`default`: `.app-vetting.yaml`
+
+### `app_vetting`
+Path for generated file with markdown for manual checks. Used only if `manual` in `included_tags`
+`default`: `manual_check_markdown.txt`
+
 ## Outputs
 
 ### `status`:  
@@ -34,7 +50,7 @@ with:
 ```
 ### Downloading manual checks markdown
 If the comparison is successful then a markdown consisting a table with manual check names and comments is generated. It can be uploaded to artifacts.
-```
+```yml
 - name: upload-manual-check-markodown
         uses: actions/upload-artifact@v2
         with:
@@ -48,7 +64,7 @@ The markdown is ready to paste into confluence, by:
 Running `appinspect-cli-action` with `manual` tag in `included_tags` detects checks that need to be verified manually and tests if all of them were already reviewed - if not the action will fail.
 ### Manual checks review
 To see checks to be verified inspect the `result_file` from `appinspect-cli-action` run with manual tag. Verify manual checks and mark them as reviewed by adding them one by one into `.app-vetting.yaml`, ex:
-```
+```yml
 name_of_manual_check_1:
   comment: 'your comment'
 name_of_manual_check_2:
