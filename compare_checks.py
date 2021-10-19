@@ -28,7 +28,7 @@ def compare(vetting_file: str = ".app-vetting.yaml", appinspect_result_file: str
     Compares checks from vetting file and appinspect result file
     :param vetting_file: path to yaml file with verified manual checks
     :param appinspect_result_file: path to Splunk's AppInspect CLI result file
-    :return: list of non matching tests between vetting_file and appinspect_result_file
+    :return: list of non matching tests between vetting_file and appinspect_result_file or not commented ones
     """
     if not os.path.isfile(vetting_file):
         raise FileNotFoundError(
@@ -64,7 +64,16 @@ def compare(vetting_file: str = ".app-vetting.yaml", appinspect_result_file: str
             f"{BCOLORS.WARNING}Some manual checks were found in {vetting_file}, which are not present in appinspect output. Please delete them, as they are deprecated. List of checks:{BCOLORS.ENDC}")
         for check in deprecated_checks:
             print(f"{BCOLORS.WARNING}\t{check}{BCOLORS.ENDC}")
-    return new_checks
+    not_commented = []
+    for check, info in vetting_data.items():
+        if not info.get("comment"):
+            not_commented.append(check)
+        if not_commented:
+            print(
+                f"{BCOLORS.FAIL}All verified manual checks require comment. Below checks are not commented in {vetting_file}:{BCOLORS.ENDC}")
+            for check in not_commented:
+                print(f"{BCOLORS.FAIL}\t{check}{BCOLORS.ENDC}")
+    return new_checks + not_commented
 
 
 def main():
