@@ -17,14 +17,17 @@ For a more comprehensive Splunk app testing workflow, visit the [`splunk/splunk-
 
 ### `result-file`
 The file name to use for the json result.
+
 `default`: `appinspect_result.json`
 
 ### `included_tags`
 Appinspect tags to include
+
 `required`: `false`
   
 ### `excluded_tags`
 Appinspect tags to exclude
+
 `required`: `false`
 
 ### `app_vetting`
@@ -33,6 +36,7 @@ Path to app vetting yaml file. Used only if `manual` in `included_tags`
 
 ### `app_vetting`
 Path for generated file with markdown for manual checks. Used only if `manual` in `included_tags`
+
 `default`: `manual_check_markdown.txt`
 
 ## Outputs
