@@ -5,7 +5,7 @@ import yaml
 
 from typing import List
 
-print(sys.argv)
+
 APP_VETTING_PATH = sys.argv[1]
 APPINSPECT_OUTPUT_PATH = sys.argv[2]
 
