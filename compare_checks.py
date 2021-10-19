@@ -1,10 +1,10 @@
-import sys
 import json
+import os
+import sys
 
 import yaml
 
 from typing import List
-
 
 APP_VETTING_PATH = sys.argv[1]
 APPINSPECT_OUTPUT_PATH = sys.argv[2]
@@ -30,6 +30,14 @@ def compare(vetting_file: str = ".app-vetting.yaml", appinspect_result_file: str
     :param appinspect_result_file: path to Splunk's AppInspect CLI result file
     :return: list of non matching tests between vetting_file and appinspect_result_file
     """
+    if not os.path.isfile(vetting_file):
+        print(
+            f"{BCOLORS.FAIL}File {vetting_file} does not exist. Create it and fill out with list of verified manual checks{BCOLORS.ENDC}")
+
+    if not os.path.isfile(appinspect_result_file):
+        print(
+            f"{BCOLORS.FAIL}File {appinspect_result_file} does not exist. Something went wrong with report generation{BCOLORS.ENDC}")
+
     with open(vetting_file) as f:
         vetting_data = yaml.safe_load(f)
 
