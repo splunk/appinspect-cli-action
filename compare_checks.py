@@ -54,25 +54,30 @@ def compare(vetting_file: str = ".app-vetting.yaml", appinspect_result_file: str
 
     new_checks = list(set(manual_checks) - set(vetting_data.keys()))
     deprecated_checks = vetting_data.keys() - manual_checks
+
     if new_checks:
         print(
             f"{BCOLORS.FAIL}Some manual checks were found in appinspect output, which are not present in {vetting_file}. List of checks:{BCOLORS.ENDC}")
         for check in new_checks:
             print(f"{BCOLORS.FAIL}\t{check}{BCOLORS.ENDC}")
+
     if deprecated_checks:
         print(
             f"{BCOLORS.WARNING}Some manual checks were found in {vetting_file}, which are not present in appinspect output. Please delete them, as they are deprecated. List of checks:{BCOLORS.ENDC}")
         for check in deprecated_checks:
             print(f"{BCOLORS.WARNING}\t{check}{BCOLORS.ENDC}")
     not_commented = []
+
     for check, info in vetting_data.items():
         if not info.get("comment"):
             not_commented.append(check)
-        if not_commented:
-            print(
-                f"{BCOLORS.FAIL}All verified manual checks require comment. Below checks are not commented in {vetting_file}:{BCOLORS.ENDC}")
-            for check in not_commented:
-                print(f"{BCOLORS.FAIL}\t{check}{BCOLORS.ENDC}")
+
+    if not_commented:
+        print(
+            f"{BCOLORS.FAIL}All verified manual checks require comment. Below checks are not commented in {vetting_file}:{BCOLORS.ENDC}")
+        for check in not_commented:
+            print(f"{BCOLORS.FAIL}\t{check}{BCOLORS.ENDC}")
+
     return new_checks + not_commented
 
 
