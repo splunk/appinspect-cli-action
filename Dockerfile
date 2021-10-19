@@ -11,4 +11,4 @@ COPY compare_checks.py.py /
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
 WORKDIR /github/workspace
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["bin/bash", "/entrypoint.sh"]
