@@ -55,15 +55,15 @@ def compare(vetting_file: str = ".app-vetting.yaml", appinspect_result_file: str
     new_checks = list(set(manual_checks) - set(vetting_data.keys()))
     deprecated_checks = vetting_data.keys() - manual_checks
     if new_checks:
-        check_list_to_print = "\n\t".join(new_checks)
         print(
             f"{BCOLORS.FAIL}Some manual checks were found in appinspect output, which are not present in {vetting_file}. List of checks:{BCOLORS.ENDC}")
-        print(f"{BCOLORS.FAIL}\t{check_list_to_print}{BCOLORS.ENDC}")
+        for check in new_checks:
+            print(f"{BCOLORS.FAIL}\t{check}{BCOLORS.ENDC}")
     if deprecated_checks:
-        check_list_to_print = "\n\t".join(deprecated_checks)
         print(
             f"{BCOLORS.WARNING}Some manual checks were found in {vetting_file}, which are not present in appinspect output. Please delete them, as they are deprecated. List of checks:{BCOLORS.ENDC}")
-        print(f"{BCOLORS.WARNING}\t{check_list_to_print}{BCOLORS.ENDC}")
+        for check in deprecated_checks:
+            print(f"{BCOLORS.WARNING}\t{check}{BCOLORS.ENDC}")
     return new_checks
 
 
