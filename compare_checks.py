@@ -32,14 +32,16 @@ def compare(vetting_file: str = ".app-vetting.yaml", appinspect_result_file: str
     """
     if not os.path.isfile(vetting_file):
         raise FileNotFoundError(
-            f"{BCOLORS.FAIL}File {vetting_file} does not exist. Create it and fill out with list of verified manual checks{BCOLORS.ENDC}")
+            f"File {vetting_file} does not exist. Create it and fill out with list of verified manual checks")
 
     if not os.path.isfile(appinspect_result_file):
         raise FileNotFoundError(
-            f"{BCOLORS.FAIL}File {appinspect_result_file} does not exist. Something went wrong with report generation{BCOLORS.ENDC}")
+            f"File {appinspect_result_file} does not exist. Something went wrong with report generation")
 
     with open(vetting_file) as f:
         vetting_data = yaml.safe_load(f)
+    if vetting_data is None:
+        vetting_data = {}
 
     with open(appinspect_result_file) as f:
         appinspect_results = json.load(f)
