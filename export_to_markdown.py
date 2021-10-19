@@ -28,6 +28,7 @@ class ExportToMarkdown:
     """
     Based on app vetting file generates file with markdown consisting names of validated checks and comments.
     """
+
     def __init__(self, manual_checks_path, markdown_output_path):
         self.manual_checks_path = manual_checks_path
         self.markdown_output_path = markdown_output_path

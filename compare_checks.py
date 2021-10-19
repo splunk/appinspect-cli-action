@@ -6,24 +6,27 @@ import yaml
 
 from typing import List
 
+print(f"Script was called with parameters: {' '.join(sys.argv[1:])}")
 APP_VETTING_PATH = sys.argv[1]
 APPINSPECT_OUTPUT_PATH = sys.argv[2]
 
 
 class BCOLORS:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKCYAN = '\033[96m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+    HEADER = "\033[95m"
+    OKBLUE = "\033[94m"
+    OKCYAN = "\033[96m"
+    OKGREEN = "\033[92m"
+    WARNING = "\033[93m"
+    FAIL = "\033[91m"
+    ENDC = "\033[0m"
+    BOLD = "\033[1m"
+    UNDERLINE = "\033[4m"
 
 
-def compare(vetting_file: str = ".app-vetting.yaml", appinspect_result_file: str = "appinspect_output.json") -> List[
-    str]:
+def compare(
+    vetting_file: str = ".app-vetting.yaml",
+    appinspect_result_file: str = "appinspect_output.json",
+) -> List[str]:
     """
     Compares checks from vetting file and appinspect result file
     :param vetting_file: path to yaml file with verified manual checks
@@ -32,11 +35,13 @@ def compare(vetting_file: str = ".app-vetting.yaml", appinspect_result_file: str
     """
     if not os.path.isfile(vetting_file):
         raise FileNotFoundError(
-            f"File {vetting_file} does not exist. Create it and fill out with list of verified manual checks")
+            f"File {vetting_file} does not exist. Create it and fill out with list of verified manual checks"
+        )
 
     if not os.path.isfile(appinspect_result_file):
         raise FileNotFoundError(
-            f"File {appinspect_result_file} does not exist. Something went wrong with report generation")
+            f"File {appinspect_result_file} does not exist. Something went wrong with report generation"
+        )
 
     with open(vetting_file) as f:
         vetting_data = yaml.safe_load(f)
@@ -57,15 +62,19 @@ def compare(vetting_file: str = ".app-vetting.yaml", appinspect_result_file: str
 
     if new_checks:
         print(
-            f"{BCOLORS.FAIL}Some manual checks were found in appinspect output, which are not present in {vetting_file}. List of checks:{BCOLORS.ENDC}")
+            f"{BCOLORS.FAIL}{BCOLORS.BOLD}Some manual checks were found in appinspect output, which are not present in"
+            f" {vetting_file}. List of checks:{BCOLORS.ENDC}"
+        )
         for check in new_checks:
-            print(f"{BCOLORS.FAIL}\t{check}{BCOLORS.ENDC}")
+            print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
 
     if deprecated_checks:
         print(
-            f"{BCOLORS.WARNING}Some manual checks were found in {vetting_file}, which are not present in appinspect output. Please delete them, as they are deprecated. List of checks:{BCOLORS.ENDC}")
+            f"{BCOLORS.WARNING}{BCOLORS.BOLD}Some manual checks were found in {vetting_file}, which are not present in"
+            f" appinspect output. Please delete them, as they are deprecated. List of checks:{BCOLORS.ENDC}"
+        )
         for check in deprecated_checks:
-            print(f"{BCOLORS.WARNING}\t{check}{BCOLORS.ENDC}")
+            print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
     not_commented = []
 
     for check, info in vetting_data.items():
@@ -74,9 +83,11 @@ def compare(vetting_file: str = ".app-vetting.yaml", appinspect_result_file: str
 
     if not_commented:
         print(
-            f"{BCOLORS.FAIL}All verified manual checks require comment. Below checks are not commented in {vetting_file}:{BCOLORS.ENDC}")
+            f"{BCOLORS.FAIL}{BCOLORS.BOLD}All verified manual checks require comment. Below checks are not commented in"
+            f" {vetting_file}:{BCOLORS.ENDC}"
+        )
         for check in not_commented:
-            print(f"{BCOLORS.FAIL}\t{check}{BCOLORS.ENDC}")
+            print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
 
     return new_checks + not_commented
 
@@ -87,5 +98,5 @@ def main():
         exit(1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
