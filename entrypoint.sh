@@ -47,6 +47,7 @@ echo "test_exit_code $test_exit_code"
 echo "tags: $INPUT_INCLUDED_TAGS"
 if [[ "$INPUT_INCLUDED_TAGS" == *"manual"* ]] && [ $test_exit_code == 0 ]; then
   echo "::group::manual_checks"
+  echo "/compare_checks.py $APP_VETTING $INPUT_RESULT_FILE"
   python3 /compare_checks.py $APP_VETTING $INPUT_RESULT_FILE
   test_exit_code=$?
   echo "::endgroup::"
