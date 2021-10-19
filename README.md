@@ -32,6 +32,7 @@ Appinspect tags to exclude
 
 ### `app_vetting`
 Path to app vetting yaml file. Used only if `manual` in `included_tags`
+
 `default`: `.app-vetting.yaml`
 
 ### `manual_check_markdown`
