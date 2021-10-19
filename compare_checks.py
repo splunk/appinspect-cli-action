@@ -31,11 +31,11 @@ def compare(vetting_file: str = ".app-vetting.yaml", appinspect_result_file: str
     :return: list of non matching tests between vetting_file and appinspect_result_file
     """
     if not os.path.isfile(vetting_file):
-        print(
+        raise FileNotFoundError(
             f"{BCOLORS.FAIL}File {vetting_file} does not exist. Create it and fill out with list of verified manual checks{BCOLORS.ENDC}")
 
     if not os.path.isfile(appinspect_result_file):
-        print(
+        raise FileNotFoundError(
             f"{BCOLORS.FAIL}File {appinspect_result_file} does not exist. Something went wrong with report generation{BCOLORS.ENDC}")
 
     with open(vetting_file) as f:
