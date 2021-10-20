@@ -53,8 +53,8 @@ def compare(
     if vetting_data is None:
         if manual_checks:
             print(
-                f"{BCOLORS.WARNING}{BCOLORS.BOLD}{vetting_file} is empty. You can initilize it with below yaml content. Every check requires"
-                f"some comment whcih means that check was manually verified{BCOLORS.ENDC}"
+                f"{BCOLORS.WARNING}{BCOLORS.BOLD}{vetting_file} is empty. You can initilize it with below yaml content."
+                f" Every check requires some comment which means that check was manually verified{BCOLORS.ENDC}"
             )
             for check in manual_checks:
                 print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}{check}:{BCOLORS.ENDC}")
