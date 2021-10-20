@@ -2,6 +2,7 @@ import json
 import sys
 from pprint import pprint
 
+
 def main(args):
     try:
         with open(args[0]) as f:
@@ -14,7 +15,7 @@ def main(args):
                         print("Warning List:")
                         for group in result["reports"][0]["groups"]:
                             for check in group["checks"]:
-                                if check["result"]=="warning":
+                                if check["result"] == "warning":
                                     for msg in check["messages"]:
                                         print(msg["message"])
                     pprint(result["summary"])
@@ -26,7 +27,7 @@ def main(args):
                     print("Failure List:")
                     for group in result["reports"][0]["groups"]:
                         for check in group["checks"]:
-                            if check["result"]=="failure":
+                            if check["result"] == "failure":
                                 for msg in check["messages"]:
                                     print(msg["message"])
                     sys.exit(1)
@@ -42,4 +43,3 @@ def main(args):
 if __name__ == "__main__":
     print(sys.argv[1:])
     main(sys.argv[1:])
-    

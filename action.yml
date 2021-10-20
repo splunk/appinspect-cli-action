@@ -14,9 +14,17 @@ inputs:
   excluded_tags:
     description: "Tags to exclude"
     required: false
+  app_vetting:
+    description: "Path to app vetting yaml file"
+    required: false
+    default: ".app-vetting.yaml"
+  manual_check_markdown:
+    description: "Path for generated file with markdown for manual checks"
+    required: false
+    default: "manual_check_markdown.txt"
 outputs:
   status:
     description: "value is success/fail based on app inspect result"
 runs:
   using: "docker"
-  image: "docker://ghcr.io/splunk/appinspect-cli-action/appinspect-cli-action:v1.2.0"
+  image: "Dockerfile"
