@@ -51,11 +51,12 @@ def compare(
         vetting_data = yaml.safe_load(f)
     if vetting_data is None:
         if manual_checks:
-            print(f"{vetting_file} is empty. You can initilize it with below yaml content. Every check requires"
-                  f"some comment whcih means that check was manually verified")
+            print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}{vetting_file} is empty. You can initilize it with below yaml content. Every check requires"
+                  f"some comment whcih means that check was manually verified{BCOLORS.ENDC}")
             for check in manual_checks:
                 print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}{check}:{BCOLORS.ENDC}")
                 print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}  comment: ''{BCOLORS.ENDC}")
+            print()
         vetting_data = {}
 
     new_checks = list(set(manual_checks) - set(vetting_data.keys()))
