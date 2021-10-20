@@ -1,12 +1,13 @@
 import json
 import os
 import sys
+from typing import List
 
 import yaml
 
-from typing import List
-
-print(f"{os.path.basename(__file__)} script was called with parameters: {' '.join(sys.argv[1:])}")
+print(
+    f"{os.path.basename(__file__)} script was called with parameters: {' '.join(sys.argv[1:])}"
+)
 APP_VETTING_PATH = sys.argv[1]
 APPINSPECT_OUTPUT_PATH = sys.argv[2]
 
@@ -51,8 +52,10 @@ def compare(
         vetting_data = yaml.safe_load(f)
     if vetting_data is None:
         if manual_checks:
-            print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}{vetting_file} is empty. You can initilize it with below yaml content. Every check requires"
-                  f"some comment whcih means that check was manually verified{BCOLORS.ENDC}")
+            print(
+                f"{BCOLORS.WARNING}{BCOLORS.BOLD}{vetting_file} is empty. You can initilize it with below yaml content. Every check requires"
+                f"some comment whcih means that check was manually verified{BCOLORS.ENDC}"
+            )
             for check in manual_checks:
                 print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}{check}:{BCOLORS.ENDC}")
                 print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}  comment: ''{BCOLORS.ENDC}")

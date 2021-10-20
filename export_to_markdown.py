@@ -1,4 +1,5 @@
 import sys
+
 import yaml
 
 APP_VETTING_PATH = sys.argv[1]
@@ -39,7 +40,7 @@ class ExportToMarkdown:
         self._create_output_markup()
 
     def _load_manual_checks(self):
-        with open(self.manual_checks_path, "r") as report_yaml:
+        with open(self.manual_checks_path) as report_yaml:
             self.report = yaml.safe_load(report_yaml)
 
     def _create_output_markup(self):
