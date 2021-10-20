@@ -54,8 +54,8 @@ def compare(
             print(f"{vetting_file} is empty. You can initilize it with below yaml content. Every check requires"
                   f"some comment whcih means that check was manually verified")
             for check in manual_checks:
-                print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}{check}:")
-                print("  comment: ''")
+                print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}{check}:{BCOLORS.ENDC}")
+                print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}  comment: ''{BCOLORS.ENDC}")
         vetting_data = {}
 
     new_checks = list(set(manual_checks) - set(vetting_data.keys()))
