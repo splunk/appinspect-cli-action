@@ -6,7 +6,7 @@ import yaml
 
 from typing import List
 
-print(f"Script was called with parameters: {' '.join(sys.argv[1:])}")
+print(f"{os.path.basename(__file__)} script was called with parameters: {' '.join(sys.argv[1:])}")
 APP_VETTING_PATH = sys.argv[1]
 APPINSPECT_OUTPUT_PATH = sys.argv[2]
 
@@ -28,7 +28,9 @@ def compare(
     appinspect_result_file: str = "appinspect_output.json",
 ) -> List[str]:
     """
-    Compares checks from vetting file and appinspect result file
+    Compares checks from vetting file and appinspect result file. A lot prints are added to make it
+    easier for users to create proper vetting_file and understand errors
+
     :param vetting_file: path to yaml file with verified manual checks
     :param appinspect_result_file: path to Splunk's AppInspect CLI result file
     :return: list of non matching tests between vetting_file and appinspect_result_file or not commented ones
@@ -43,19 +45,18 @@ def compare(
             f"File {appinspect_result_file} does not exist. Something went wrong with report generation"
         )
 
+    manual_checks = get_checks_from_appinspect_result(appinspect_result_file)
+
     with open(vetting_file) as f:
         vetting_data = yaml.safe_load(f)
     if vetting_data is None:
+        if manual_checks:
+            print(f"{vetting_file} is empty. You can initilize it with below yaml content. Every check requires"
+                  f"some comment whcih means that check was manually verified")
+            for check in manual_checks:
+                print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}{check}:")
+                print("  comment: ''")
         vetting_data = {}
-
-    with open(appinspect_result_file) as f:
-        appinspect_results = json.load(f)
-        manual_checks = []
-        for report in appinspect_results["reports"]:
-            for group in report["groups"]:
-                for check in group["checks"]:
-                    if check["result"] == "manual_check":
-                        manual_checks.append(check["name"])
 
     new_checks = list(set(manual_checks) - set(vetting_data.keys()))
     deprecated_checks = vetting_data.keys() - manual_checks
@@ -90,6 +91,24 @@ def compare(
             print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
 
     return new_checks + not_commented
+
+
+def get_checks_from_appinspect_result(path: str) -> List[str]:
+    """
+    Returns manual checks from appinspect json result file
+
+    :param path: path to json result file
+    :return: list of checks in string format
+    """
+    manual_checks = []
+    with open(path) as f:
+        appinspect_results = json.load(f)
+        for report in appinspect_results["reports"]:
+            for group in report["groups"]:
+                for check in group["checks"]:
+                    if check["result"] == "manual_check":
+                        manual_checks.append(check["name"])
+    return manual_checks
 
 
 def main():
