@@ -44,7 +44,6 @@ echo "::endgroup::"
 
 if [[ "$INPUT_INCLUDED_TAGS" == *"manual"* ]] && [ $test_exit_code == 0 ]; then
   echo "::group::manual_checks"
-  echo "/compare_checks.py $INPUT_APP_VETTING $INPUT_RESULT_FILE"
   python3 /compare_checks.py $INPUT_APP_VETTING $INPUT_RESULT_FILE
   test_exit_code=$?
   if [ $test_exit_code == 0 ]; then

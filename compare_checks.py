@@ -94,6 +94,9 @@ def compare(
         for check in not_commented:
             print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
 
+    if new_checks or not_commented:
+        print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}Please see appinspect report for more detailed description about manual checks and review them accordingly.{BCOLORS.ENDC}")
+
     return new_checks + not_commented
 
 
