@@ -40,7 +40,7 @@ class ExportToMarkdown:
 
     def _load_manual_checks(self):
         with open(self.manual_checks_path, "r") as report_yaml:
-            self.report = yaml.load(report_yaml, Loader=yaml.FullLoader)
+            self.report = yaml.safe_load(report_yaml)
 
     def _create_output_markup(self):
         with open(self.markdown_output_path, "w") as output:
