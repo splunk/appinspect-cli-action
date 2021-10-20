@@ -40,13 +40,15 @@ class ExportToMarkdown:
         self._create_output_markup()
 
     def _load_manual_checks(self):
-        with open(self.manual_checks_path) as report_yaml:
-            self.report = yaml.safe_load(report_yaml)
+        with open(self.manual_checks_path) as vetting_data:
+            self.manual_checks = yaml.safe_load(vetting_data)
+        if self.manual_checks is None:
+            self.manual_checks = {}
 
     def _create_output_markup(self):
         with open(self.markdown_output_path, "w") as output:
             output.write(MARKDOWN_START)
-            for manual_check, check_attributes in self.report.items():
+            for manual_check, check_attributes in self.manual_checks.items():
                 output.write(
                     CHECK_MARKDOWN_TEMPLATE.format(
                         manual_check=manual_check, comment=check_attributes["comment"]
