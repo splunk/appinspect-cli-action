@@ -26,4 +26,5 @@ outputs:
   status:
     description: "value is success/fail based on app inspect result"
 runs:
+  using: "docker"
   image: "Dockerfile"
