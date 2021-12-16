@@ -41,13 +41,14 @@ jobs:
     runs-on: ubuntu-latest
     name: Build Action
     steps:
-      # To use this repository's private action,
-      # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v2
         with:
           submodules: recursive
           persist-credentials: false
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
       - name: Install yq
         run: sudo snap install yq
       - name: Set up QEMU
