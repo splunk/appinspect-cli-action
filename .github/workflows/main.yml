@@ -96,7 +96,7 @@ jobs:
             @semantic-release/exec
             @semantic-release/git
         env:
-          GITHUB_TOKEN: ${{ secrets.GHCR_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ADMIN }}
   update-semver:
     name: Move Respository semver tags
     if: startsWith(github.ref, 'refs/tags/v')
