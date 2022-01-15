@@ -82,4 +82,4 @@ If the comparison is successful then a markdown consisting a table with manual c
     path: manual_check_markdown.txt
 ```
 The markdown is ready to paste into confluence, by:
-`Edit -> Insert more content -> Markup`, change insert type to `Markdown` and paste the contents of the file
+`Edit -> Insert more content -> Markup`, change insert type to `Markdown` and paste the contents of the file.
