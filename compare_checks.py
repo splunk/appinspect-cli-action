@@ -61,7 +61,6 @@ def compare(
 
     new_manual_checks = list(set(manual_checks) - set(vetting_data.keys()))
     new_failure_checks = list(set(failure_checks) - set(vetting_data.keys()))
-    print(new_failure_checks)
     
     if new_manual_checks:
         print(
