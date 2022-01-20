@@ -47,7 +47,7 @@ def compare(
     if os.path.isfile(vetting_file):
         with open(vetting_file) as f:
             vetting_data = yaml.safe_load(f)
-    if len(vetting_data):
+    if len(vetting_data) == 0:
         if manual_checks:
             print(
                 f"{BCOLORS.WARNING}{BCOLORS.BOLD}{vetting_file} is empty. You can initilize it with below yaml content."
