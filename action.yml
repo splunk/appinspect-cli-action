@@ -19,7 +19,7 @@ inputs:
     required: false
     default: ".app-vetting.yaml"
   manual_check_markdown:
-    description: "Path for generated file with markdown for manual checks"
+    description: "Path for generated file with markdown for manual checks and exceptions"
     required: false
     default: "manual_check_markdown.txt"
 outputs:

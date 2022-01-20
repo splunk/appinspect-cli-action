@@ -36,11 +36,6 @@ def compare(
     :param appinspect_result_file: path to Splunk's AppInspect CLI result file
     :return: list of non matching tests between vetting_file and appinspect_result_file or not commented ones
     """
-    if not os.path.isfile(vetting_file):
-        raise FileNotFoundError(
-            f"File {vetting_file} does not exist. Create it and fill out with list of verified manual checks"
-        )
-
     if not os.path.isfile(appinspect_result_file):
         raise FileNotFoundError(
             f"File {appinspect_result_file} does not exist. Something went wrong with report generation"
@@ -48,8 +43,10 @@ def compare(
 
     manual_checks = get_checks_from_appinspect_result(appinspect_result_file)
 
-    with open(vetting_file) as f:
-        vetting_data = yaml.safe_load(f)
+    vetting_date = {}
+    if os.path.isfile(vetting_file):
+        with open(vetting_file) as f:
+            vetting_data = yaml.safe_load(f)            
     if vetting_data is None:
         if manual_checks:
             print(
@@ -73,13 +70,6 @@ def compare(
         for check in new_checks:
             print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
 
-    if deprecated_checks:
-        print(
-            f"{BCOLORS.WARNING}{BCOLORS.BOLD}Some manual checks were found in {vetting_file}, which are not present in"
-            f" appinspect output. Please delete them, as they are deprecated. List of checks:{BCOLORS.ENDC}"
-        )
-        for check in deprecated_checks:
-            print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
     not_commented = []
 
     for check, info in vetting_data.items():
