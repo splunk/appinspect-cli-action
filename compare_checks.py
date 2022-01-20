@@ -43,7 +43,7 @@ def compare(
 
     manual_checks = get_checks_from_appinspect_result(appinspect_result_file)
 
-    vetting_data = {}
+    vetting_data = None
     if os.path.isfile(vetting_file):
         with open(vetting_file) as f:
             vetting_data = yaml.safe_load(f)
