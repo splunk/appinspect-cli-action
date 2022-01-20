@@ -50,7 +50,7 @@ jobs:
         with:
           node-version: '14'
       - name: Install yq
-        run: sudo snap install yq
+        run: brew install yq
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
