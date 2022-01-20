@@ -42,8 +42,10 @@ def compare(
         )
 
     manual_checks = get_checks_from_appinspect_result(appinspect_result_file)
-    failure_checks = get_checks_from_appinspect_result(appinspect_result_file,result="failure")
-    
+    failure_checks = get_checks_from_appinspect_result(
+        appinspect_result_file, result="failure"
+    )
+
     vetting_data = {}
     if os.path.isfile(vetting_file):
         with open(vetting_file) as f:
@@ -61,7 +63,7 @@ def compare(
 
     new_manual_checks = list(set(manual_checks) - set(vetting_data.keys()))
     new_failure_checks = list(set(failure_checks) - set(vetting_data.keys()))
-    
+
     if new_manual_checks:
         print(
             f"{BCOLORS.FAIL}{BCOLORS.BOLD}Some manual checks were found in appinspect output, which are not present in"
@@ -100,7 +102,9 @@ def compare(
     return new_manual_checks + new_failure_checks + not_commented
 
 
-def get_checks_from_appinspect_result(path: str,result: str="manual_check") -> List[str]:
+def get_checks_from_appinspect_result(
+    path: str, result: str = "manual_check"
+) -> List[str]:
     """
     Returns manual checks from appinspect json result file
 

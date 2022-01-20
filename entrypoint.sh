@@ -52,4 +52,4 @@ if [ $check_exit_code == 0 ]; then
 fi
 echo "::endgroup::"
 
-exit "$test_exit_code"
+exit "$check_exit_code"
