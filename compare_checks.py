@@ -43,11 +43,11 @@ def compare(
 
     manual_checks = get_checks_from_appinspect_result(appinspect_result_file)
 
-    vetting_data = None
+    vetting_data = {}
     if os.path.isfile(vetting_file):
         with open(vetting_file) as f:
             vetting_data = yaml.safe_load(f)
-    if vetting_data is None:
+    if len(vetting_data):
         if manual_checks:
             print(
                 f"{BCOLORS.WARNING}{BCOLORS.BOLD}{vetting_file} is empty. You can initilize it with below yaml content."
@@ -57,7 +57,6 @@ def compare(
                 print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}{check}:{BCOLORS.ENDC}")
                 print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}  comment: ''{BCOLORS.ENDC}")
             print()
-        vetting_data = {}
 
     new_checks = list(set(manual_checks) - set(vetting_data.keys()))
     deprecated_checks = vetting_data.keys() - manual_checks
