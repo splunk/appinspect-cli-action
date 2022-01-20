@@ -42,7 +42,7 @@ python3 /reporter.py $INPUT_RESULT_FILE
 test_exit_code=$?
 echo "::endgroup::"
 
-if [ $test_exit_code == 0 ]; then
+if [ $test_exit_code != 0 ]; then
   echo "::group::manual_checks"
   python3 /compare_checks.py $INPUT_APP_VETTING $INPUT_RESULT_FILE
   test_exit_code=$?
