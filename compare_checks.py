@@ -8,9 +8,10 @@ import yaml
 print(
     f"{os.path.basename(__file__)} script was called with parameters: {' '.join(sys.argv[1:])}"
 )
+
 APP_VETTING_PATH = sys.argv[1]
 APPINSPECT_OUTPUT_PATH = sys.argv[2]
-
+CHECK_TYPE = sys.argv[3]
 
 class BCOLORS:
     HEADER = "\033[95m"
@@ -27,6 +28,7 @@ class BCOLORS:
 def compare(
     vetting_file: str = ".app-vetting.yaml",
     appinspect_result_file: str = "appinspect_output.json",
+    check_type: str
 ) -> List[str]:
     """
     Compares checks from vetting file and appinspect result file. A lot prints are added to make it
@@ -40,45 +42,55 @@ def compare(
         raise FileNotFoundError(
             f"File {appinspect_result_file} does not exist. Something went wrong with report generation"
         )
-
-    manual_checks = get_checks_from_appinspect_result(appinspect_result_file)
-    failure_checks = get_checks_from_appinspect_result(
-        appinspect_result_file, result="failure"
-    )
+    
+    checks = get_checks_from_appinspect_result(appinspect_result_file, check_type)
+    
+    #manual_checks = get_checks_from_appinspect_result(appinspect_result_file)
+    #failure_checks = get_checks_from_appinspect_result(
+    #    appinspect_result_file, result="failure"
+    #)
 
     vetting_data = {}
     if os.path.isfile(vetting_file):
         with open(vetting_file) as f:
             vetting_data = yaml.safe_load(f)
     if len(vetting_data) == 0:
-        if manual_checks:
+        if checks:
             print(
                 f"{BCOLORS.WARNING}{BCOLORS.BOLD}{vetting_file} is empty. You can initilize it with below yaml content."
                 f" Every check requires some comment which means that check was manually verified{BCOLORS.ENDC}"
             )
-            for check in manual_checks:
+            for check in checks:
                 print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}{check}:{BCOLORS.ENDC}")
                 print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}  comment: ''{BCOLORS.ENDC}")
             print()
 
-    new_manual_checks = list(set(manual_checks) - set(vetting_data.keys()))
-    new_failure_checks = list(set(failure_checks) - set(vetting_data.keys()))
+    #new_manual_checks = list(set(manual_checks) - set(vetting_data.keys()))
+    #new_failure_checks = list(set(failure_checks) - set(vetting_data.keys()))
+    new_checks = list(set(checks) - set(vetting_data.keys()))
+#     if new_manual_checks:
+#         print(
+#             f"{BCOLORS.FAIL}{BCOLORS.BOLD}Some manual checks were found in appinspect output, which are not present in"
+#             f" {vetting_file}. List of checks:{BCOLORS.ENDC}"
+#         )
+#         for check in new_manual_checks:
+#             print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
 
-    if new_manual_checks:
+#     if new_failure_checks:
+#         print(
+#             f"{BCOLORS.FAIL}{BCOLORS.BOLD}Some failure checks were found in appinspect output, if these issues have approved exceptions update the vetting file"
+#             f" {vetting_file}. List of checks:{BCOLORS.ENDC}"
+#         )
+#         for check in new_failure_checks:
+#             print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
+
+    if new_checks:
         print(
-            f"{BCOLORS.FAIL}{BCOLORS.BOLD}Some manual checks were found in appinspect output, which are not present in"
+            f"{BCOLORS.FAIL}{BCOLORS.BOLD}Some {check_type} checks were found in appinspect output, which are not present in"
             f" {vetting_file}. List of checks:{BCOLORS.ENDC}"
         )
-        for check in new_manual_checks:
-            print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
-
-    if new_failure_checks:
-        print(
-            f"{BCOLORS.FAIL}{BCOLORS.BOLD}Some failure checks were found in appinspect output, if these issues have approved exceptions update the vetting file"
-            f" {vetting_file}. List of checks:{BCOLORS.ENDC}"
-        )
-        for check in new_failure_checks:
-            print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
+        for check in new_checks:
+            print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}") 
 
     not_commented = []
 
@@ -94,12 +106,12 @@ def compare(
         for check in not_commented:
             print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
 
-    if new_manual_checks or not_commented:
+    if new_checks or not_commented:
         print(
             f"{BCOLORS.FAIL}{BCOLORS.BOLD}Please see appinspect report for more detailed description about manual checks and review them accordingly.{BCOLORS.ENDC}"
         )
 
-    return new_manual_checks + new_failure_checks + not_commented
+    return new_checks + not_commented
 
 
 def get_checks_from_appinspect_result(
@@ -123,7 +135,7 @@ def get_checks_from_appinspect_result(
 
 
 def main():
-    not_verified_checks = compare(APP_VETTING_PATH, APPINSPECT_OUTPUT_PATH)
+    not_verified_checks = compare(APP_VETTING_PATH, APPINSPECT_OUTPUT_PATH, CHECK_TYPE)
     if not_verified_checks:
         exit(1)
 
