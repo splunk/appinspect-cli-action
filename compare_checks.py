@@ -26,9 +26,9 @@ class BCOLORS:
 
 
 def compare(
+    check_type: str,
     vetting_file: str = ".app-vetting.yaml",
     appinspect_result_file: str = "appinspect_output.json",
-    check_type: str
 ) -> List[str]:
     """
     Compares checks from vetting file and appinspect result file. A lot prints are added to make it
@@ -135,7 +135,7 @@ def get_checks_from_appinspect_result(
 
 
 def main():
-    not_verified_checks = compare(APP_VETTING_PATH, APPINSPECT_OUTPUT_PATH, CHECK_TYPE)
+    not_verified_checks = compare(CHECK_TYPE, APP_VETTING_PATH, APPINSPECT_OUTPUT_PATH)
     if not_verified_checks:
         exit(1)
 
