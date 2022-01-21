@@ -44,11 +44,6 @@ def compare(
         )
     
     checks = get_checks_from_appinspect_result(appinspect_result_file, check_type)
-    
-    #manual_checks = get_checks_from_appinspect_result(appinspect_result_file)
-    #failure_checks = get_checks_from_appinspect_result(
-    #    appinspect_result_file, result="failure"
-    #)
 
     vetting_data = {}
     if os.path.isfile(vetting_file):
@@ -65,24 +60,7 @@ def compare(
                 print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}  comment: ''{BCOLORS.ENDC}")
             print()
 
-    #new_manual_checks = list(set(manual_checks) - set(vetting_data.keys()))
-    #new_failure_checks = list(set(failure_checks) - set(vetting_data.keys()))
     new_checks = list(set(checks) - set(vetting_data.keys()))
-#     if new_manual_checks:
-#         print(
-#             f"{BCOLORS.FAIL}{BCOLORS.BOLD}Some manual checks were found in appinspect output, which are not present in"
-#             f" {vetting_file}. List of checks:{BCOLORS.ENDC}"
-#         )
-#         for check in new_manual_checks:
-#             print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
-
-#     if new_failure_checks:
-#         print(
-#             f"{BCOLORS.FAIL}{BCOLORS.BOLD}Some failure checks were found in appinspect output, if these issues have approved exceptions update the vetting file"
-#             f" {vetting_file}. List of checks:{BCOLORS.ENDC}"
-#         )
-#         for check in new_failure_checks:
-#             print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
 
     if new_checks:
         print(
@@ -100,7 +78,7 @@ def compare(
 
     if not_commented:
         print(
-            f"{BCOLORS.FAIL}{BCOLORS.BOLD}All verified manual checks require comment. Below checks are not commented in"
+            f"{BCOLORS.FAIL}{BCOLORS.BOLD}All verified {check_type} checks require comment. Below checks are not commented in"
             f" {vetting_file}:{BCOLORS.ENDC}"
         )
         for check in not_commented:
@@ -108,7 +86,7 @@ def compare(
 
     if new_checks or not_commented:
         print(
-            f"{BCOLORS.FAIL}{BCOLORS.BOLD}Please see appinspect report for more detailed description about manual checks and review them accordingly.{BCOLORS.ENDC}"
+            f"{BCOLORS.FAIL}{BCOLORS.BOLD}Please see appinspect report for more detailed description about {check_type} checks and review them accordingly.{BCOLORS.ENDC}"
         )
 
     return new_checks + not_commented
