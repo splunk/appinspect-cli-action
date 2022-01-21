@@ -8,8 +8,10 @@ import yaml
 print(
     f"{os.path.basename(__file__)} script was called with parameters: {' '.join(sys.argv[1:])}"
 )
+
 APP_VETTING_PATH = sys.argv[1]
 APPINSPECT_OUTPUT_PATH = sys.argv[2]
+CHECK_TYPE = sys.argv[3]
 
 
 class BCOLORS:
@@ -25,6 +27,7 @@ class BCOLORS:
 
 
 def compare(
+    check_type: str,
     vetting_file: str = ".app-vetting.yaml",
     appinspect_result_file: str = "appinspect_output.json",
 ) -> List[str]:
@@ -41,43 +44,31 @@ def compare(
             f"File {appinspect_result_file} does not exist. Something went wrong with report generation"
         )
 
-    manual_checks = get_checks_from_appinspect_result(appinspect_result_file)
-    failure_checks = get_checks_from_appinspect_result(
-        appinspect_result_file, result="failure"
-    )
+    checks = get_checks_from_appinspect_result(appinspect_result_file, check_type)
 
     vetting_data = {}
     if os.path.isfile(vetting_file):
         with open(vetting_file) as f:
             vetting_data = yaml.safe_load(f)
     if len(vetting_data) == 0:
-        if manual_checks:
+        if checks:
             print(
                 f"{BCOLORS.WARNING}{BCOLORS.BOLD}{vetting_file} is empty. You can initilize it with below yaml content."
                 f" Every check requires some comment which means that check was manually verified{BCOLORS.ENDC}"
             )
-            for check in manual_checks:
+            for check in checks:
                 print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}{check}:{BCOLORS.ENDC}")
                 print(f"{BCOLORS.WARNING}{BCOLORS.BOLD}  comment: ''{BCOLORS.ENDC}")
             print()
 
-    new_manual_checks = list(set(manual_checks) - set(vetting_data.keys()))
-    new_failure_checks = list(set(failure_checks) - set(vetting_data.keys()))
+    new_checks = list(set(checks) - set(vetting_data.keys()))
 
-    if new_manual_checks:
+    if new_checks:
         print(
-            f"{BCOLORS.FAIL}{BCOLORS.BOLD}Some manual checks were found in appinspect output, which are not present in"
+            f"{BCOLORS.FAIL}{BCOLORS.BOLD}Some {check_type} checks were found in appinspect output, which are not present in"
             f" {vetting_file}. List of checks:{BCOLORS.ENDC}"
         )
-        for check in new_manual_checks:
-            print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
-
-    if new_failure_checks:
-        print(
-            f"{BCOLORS.FAIL}{BCOLORS.BOLD}Some failure checks were found in appinspect output, if these issues have approved exceptions update the vetting file"
-            f" {vetting_file}. List of checks:{BCOLORS.ENDC}"
-        )
-        for check in new_failure_checks:
+        for check in new_checks:
             print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
 
     not_commented = []
@@ -88,18 +79,18 @@ def compare(
 
     if not_commented:
         print(
-            f"{BCOLORS.FAIL}{BCOLORS.BOLD}All verified manual checks require comment. Below checks are not commented in"
+            f"{BCOLORS.FAIL}{BCOLORS.BOLD}All verified {check_type} checks require comment. Below checks are not commented in"
             f" {vetting_file}:{BCOLORS.ENDC}"
         )
         for check in not_commented:
             print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
 
-    if new_manual_checks or not_commented:
+    if new_checks or not_commented:
         print(
-            f"{BCOLORS.FAIL}{BCOLORS.BOLD}Please see appinspect report for more detailed description about manual checks and review them accordingly.{BCOLORS.ENDC}"
+            f"{BCOLORS.FAIL}{BCOLORS.BOLD}Please see appinspect report for more detailed description about {check_type} checks and review them accordingly.{BCOLORS.ENDC}"
         )
 
-    return new_manual_checks + new_failure_checks + not_commented
+    return new_checks + not_commented
 
 
 def get_checks_from_appinspect_result(
@@ -123,7 +114,7 @@ def get_checks_from_appinspect_result(
 
 
 def main():
-    not_verified_checks = compare(APP_VETTING_PATH, APPINSPECT_OUTPUT_PATH)
+    not_verified_checks = compare(CHECK_TYPE, APP_VETTING_PATH, APPINSPECT_OUTPUT_PATH)
     if not_verified_checks:
         exit(1)
 

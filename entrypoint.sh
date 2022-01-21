@@ -39,17 +39,26 @@ echo "::endgroup::"
 
 echo "::group::reporter"
 python3 /reporter.py $INPUT_RESULT_FILE
-test_exit_code=$?
+exit_code=$?
 echo "::endgroup::"
 
-echo "::group::manual_checks"
-python3 /compare_checks.py $INPUT_APP_VETTING $INPUT_RESULT_FILE
-check_exit_code=$?
-if [ $check_exit_code == 0 ]; then
-  echo "successful comparison, generating markdown"
-  echo "/export_to_markdown.py $INPUT_APP_VETTING $INPUT_MANUAL_CHECK_MARKDOWN"
-  python3 /export_to_markdown.py $INPUT_APP_VETTING $INPUT_MANUAL_CHECK_MARKDOWN
+if [ $exit_code != 0 ]; then
+  echo "::group::failure_checks"
+  python3 /compare_checks.py $INPUT_APP_VETTING $INPUT_RESULT_FILE "failure"
+  exit_code=$?
+  echo "::endgroup::"
 fi
-echo "::endgroup::"
 
-exit "$check_exit_code"
+if [[ "$INPUT_INCLUDED_TAGS" == *"manual"* ]] && [ $exit_code == 0 ]; then
+  echo "::group::manual_checks"
+  python3 /compare_checks.py $INPUT_APP_VETTING $INPUT_RESULT_FILE "manual_check"
+  exit_code=$?
+  if [ $exit_code == 0 ]; then
+    echo "successful comparison, generating markdown"
+    echo "/export_to_markdown.py $INPUT_APP_VETTING $INPUT_MANUAL_CHECK_MARKDOWN"
+    python3 /export_to_markdown.py $INPUT_APP_VETTING $INPUT_MANUAL_CHECK_MARKDOWN
+  fi
+  echo "::endgroup::"
+fi
+
+exit "$exit_code"
