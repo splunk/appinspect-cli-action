@@ -13,6 +13,7 @@ APP_VETTING_PATH = sys.argv[1]
 APPINSPECT_OUTPUT_PATH = sys.argv[2]
 CHECK_TYPE = sys.argv[3]
 
+
 class BCOLORS:
     HEADER = "\033[95m"
     OKBLUE = "\033[94m"
@@ -42,7 +43,7 @@ def compare(
         raise FileNotFoundError(
             f"File {appinspect_result_file} does not exist. Something went wrong with report generation"
         )
-    
+
     checks = get_checks_from_appinspect_result(appinspect_result_file, check_type)
 
     vetting_data = {}
@@ -68,7 +69,7 @@ def compare(
             f" {vetting_file}. List of checks:{BCOLORS.ENDC}"
         )
         for check in new_checks:
-            print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}") 
+            print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
 
     not_commented = []
 
