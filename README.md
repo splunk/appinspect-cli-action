@@ -62,7 +62,7 @@ When `appinspect-cli-action` is called with `manual` tag, it scans the package w
 ## Example usage
 
 ```yml
-- uses: splunk/appinspect-cli-action@v1
+- uses: splunk/appinspect-cli-action@v1.4.6
   with:
     app_path: 'test'
 ```
@@ -70,7 +70,7 @@ When `appinspect-cli-action` is called with `manual` tag, it scans the package w
 If the comparison is successful then a markdown consisting a table with manual check names and comments is generated. It can be uploaded to artifacts.
 ```yml
 - uses: actions/checkout@v2
-- uses: splunk/appinspect-cli-action@v1.3
+- uses: splunk/appinspect-cli-action@v1.4.6
   with:
     app_path: 'test'
     included_tags: manual
