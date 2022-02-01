@@ -49,7 +49,7 @@ def compare(
     vetting_data = {}
     if os.path.isfile(vetting_file):
         with open(vetting_file) as f:
-            vetting_data = yaml.safe_load(f)
+            vetting_data = yaml.safe_load(f) or {}
     if len(vetting_data) == 0:
         if checks:
             print(
