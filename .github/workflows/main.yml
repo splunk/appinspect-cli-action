@@ -44,7 +44,7 @@ jobs:
           submodules: recursive
           persist-credentials: false
       - name: Install yq
-        run: brew install yq
+        run: sudo snap install yq
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
