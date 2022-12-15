@@ -1,7 +1,7 @@
 import json
+import os
 import sys
 from pprint import pprint
-import os
 
 
 def main(args):
