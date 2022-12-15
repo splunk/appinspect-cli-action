@@ -42,11 +42,11 @@ python3 /reporter.py $INPUT_RESULT_FILE
 exit_code=$?
 echo "::endgroup::"
 
+python3 /compare_checks.py $INPUT_APP_VETTING $INPUT_RESULT_FILE "manual_check"
+exit_code=$?
 if [ $exit_code != 0 ]; then
   echo "::group::failure_checks"
   python3 /compare_checks.py $INPUT_APP_VETTING $INPUT_RESULT_FILE "failure"
-  exit_code=$?
-  python3 /compare_checks.py $INPUT_APP_VETTING $INPUT_RESULT_FILE "manual_check"
   exit_code=$?
   echo "::endgroup::"
 fi
