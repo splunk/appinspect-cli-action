@@ -44,13 +44,13 @@ echo "::endgroup::"
 exit_code_failure=exit_code
 if [ $exit_code != 0 ]; then
   echo "::group::failure_checks"
-  python3 /compare_checks.py $INPUT_APP_VETTING $INPUT_RESULT_FILE "failure"
+  python3 /compare_checks.py $INPUT_APP_VETTING_EXPECTED_FAILURES $INPUT_RESULT_FILE "failure"
   exit_code_failure=$?
   echo "::endgroup::"
 fi
 
 echo "::group::manual_checks"
-python3 /compare_checks.py $INPUT_APP_VETTING $INPUT_RESULT_FILE "manual_check"
+python3 /compare_checks.py $INPUT_APP_VETTING_MANUAL_CHECKS $INPUT_RESULT_FILE "manual_check"
 exit_code_manual_check=$?
 echo "::endgroup::"
 

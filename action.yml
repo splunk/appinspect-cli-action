@@ -14,10 +14,14 @@ inputs:
   excluded_tags:
     description: "Tags to exclude"
     required: false
-  app_vetting:
-    description: "Path to app vetting yaml file"
+  app_vetting_manual_checks:
+    description: "Path to app vetting yaml file for manual checks"
     required: false
-    default: ".app-vetting.yaml"
+    default: ".app-vetting-manual-checks.yaml"
+  app_vetting_expected_failures:
+    description: "Path to app vetting yaml file for expected failures"
+    required: false
+    default: ".app-vetting-expected-failure.yaml"
   manual_check_markdown:
     description: "Path for generated file with markdown for manual checks and exceptions"
     required: false
