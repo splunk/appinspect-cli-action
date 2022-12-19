@@ -59,6 +59,7 @@ if [[ "$INPUT_INCLUDED_TAGS" == *"manual"* ]] && [ $exit_code_failure == 0 ] && 
   echo "successful comparison, generating markdown"
   echo "/export_to_markdown.py $INPUT_APP_VETTING_MANUAL_CHECKS $INPUT_MANUAL_CHECK_MARKDOWN"
   python3 /export_to_markdown.py $INPUT_APP_VETTING_MANUAL_CHECKS $INPUT_MANUAL_CHECK_MARKDOWN
+  python3 /export_to_markdown.py $INPUT_APP_VETTING_EXPECTED_FAILURES $INPUT_MANUAL_CHECK_MARKDOWN
   echo "::endgroup::"
 fi
 
