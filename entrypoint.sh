@@ -54,7 +54,7 @@ python3 /compare_checks.py $INPUT_APP_VETTING_MANUAL_CHECKS $INPUT_RESULT_FILE "
 exit_code_manual_check=$?
 echo "::endgroup::"
 
-if [[ "$INPUT_INCLUDED_TAGS" == *"manual"* ]] && [ $exit_code_failure == 0 ] && [ $exit_code_manual_check == 0 ] ; then
+if [ $exit_code_failure == 0 ] && [ $exit_code_manual_check == 0 ] ; then
   echo "::group::generate_markdown"
   echo "successful comparison, generating markdown"
   echo "/export_to_markdown.py $INPUT_APP_VETTING_MANUAL_CHECKS $INPUT_MANUAL_CHECK_MARKDOWN"
