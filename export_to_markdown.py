@@ -46,7 +46,7 @@ class ExportToMarkdown:
             self.manual_checks = {}
 
     def _create_output_markup(self):
-        with open(self.markdown_output_path, "a") as output:
+        with open(self.markdown_output_path, "w") as output:
             output.write(MARKDOWN_START)
             for manual_check, check_attributes in self.manual_checks.items():
                 output.write(

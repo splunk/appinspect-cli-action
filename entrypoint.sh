@@ -32,8 +32,8 @@ if [ ! -z $INPUT_EXCLUDED_TAGS ]; then EXCLUDED_TAGS="--excluded-tags ${INPUT_EX
 
 echo "::group::appinspect"
 rm -f $INPUT_RESULT_FILE || true 1>/dev/null
-echo running: splunk-appinspect inspect $SCAN --output-file $INPUT_RESULT_FILE --mode test $INCLUDED_TAGS $EXCLUDED_TAGS
-splunk-appinspect inspect $SCAN --output-file $INPUT_RESULT_FILE --mode test $INCLUDED_TAGS $EXCLUDED_TAGS
+echo running: splunk-appinspect inspect $SCAN --output-file $INPUT_RESULT_FILE --mode test --included-tags cloud --included-tags manual $EXCLUDED_TAGS
+splunk-appinspect inspect $SCAN --output-file $INPUT_RESULT_FILE --mode test --included-tags cloud --included-tags manual $EXCLUDED_TAGS
 if [ ! -f $INPUT_RESULT_FILE ]; then echo no result file; exit 1; fi
 echo "::endgroup::"
 
@@ -59,7 +59,7 @@ if [[ "$INPUT_INCLUDED_TAGS" == *"manual"* ]] && [ $exit_code_failure == 0 ] && 
   echo "successful comparison, generating markdown"
   echo "/export_to_markdown.py $INPUT_APP_VETTING_MANUAL_CHECKS $INPUT_MANUAL_CHECK_MARKDOWN"
   python3 /export_to_markdown.py $INPUT_APP_VETTING_MANUAL_CHECKS $INPUT_MANUAL_CHECK_MARKDOWN
-  python3 /export_to_markdown.py $INPUT_APP_VETTING_EXPECTED_FAILURES $INPUT_MANUAL_CHECK_MARKDOWN
+  python3 /export_to_markdown.py $INPUT_APP_VETTING_EXPECTED_FAILURES $INPUT_EXPECTED_FAILURE_MARKDOWN
   echo "::endgroup::"
 fi
 
