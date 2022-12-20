@@ -7,6 +7,8 @@ class BCOLORS:
     HEADER = "\033[95m"
     OKBLUE = "\033[94m"
     OKCYAN = "\033[96m"
+    OKGREEN = "\033[92m"
+    WARNING = "\033[93m"
     FAIL = "\033[91m"
     BOLD = "\033[1m"
 
@@ -23,12 +25,13 @@ def main(args):
             if "summary" in result and "failure" in result["summary"]:
                 failures = result["summary"]["failure"]
                 if failures == 0:
-                    print("App Inspect Passed!")
+                    print(f"{BCOLORS.BOLD}{BCOLORS.OKGREEN}App Inspect Passed!")
                     if "warning" in result["summary"] and result["summary"]["warning"]:
-                        print("Warning List:")
+                        print(f"{BCOLORS.OKBLUE}Warning List:")
                         for group in result["reports"][0]["groups"]:
                             for check in group["checks"]:
                                 if check["result"] == "warning":
+                                    print(f'{BCOLORS.WARNING} {check["name"]}')
                                     for msg in check["messages"]:
                                         print(msg["message"])
                     print(f'{BCOLORS.OKBLUE}{BCOLORS.BOLD} SUMMARY')
