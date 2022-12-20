@@ -1,6 +1,17 @@
 import json
 import sys
+import tabulate
 from pprint import pprint
+
+class BCOLORS:
+    HEADER = "\033[95m"
+    OKBLUE = "\033[94m"
+    OKCYAN = "\033[96m"
+
+def format_result(result):
+    header = result.keys()
+    row = [[result[x] for x in test]]
+    print(tabulate.tabulate(row, header))   
 
 
 def main(args):
@@ -28,6 +39,7 @@ def main(args):
                     for group in result["reports"][0]["groups"]:
                         for check in group["checks"]:
                             if check["result"] == "failure":
+                                print(check["name"])
                                 for msg in check["messages"]:
                                     print(msg["message"])
                     sys.exit(1)

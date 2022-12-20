@@ -41,6 +41,7 @@ echo "::group::reporter"
 python3 /reporter.py $INPUT_RESULT_FILE
 exit_code=$?
 echo "::endgroup::"
+
 exit_code_failure=$exit_code
 if [ $exit_code != 0 ]; then
   echo "::group::failure_checks"
