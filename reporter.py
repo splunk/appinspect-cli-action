@@ -43,7 +43,7 @@ def main(args):
                     for group in result["reports"][0]["groups"]:
                         for check in group["checks"]:
                             if check["result"] == "failure":
-                                print(f'{BCOLORS.FAIL}check["name"]')
+                                print(f'{BCOLORS.FAIL} {check["name"]}')
                                 for msg in check["messages"]:
                                     print(msg["message"])
                     sys.exit(1)
