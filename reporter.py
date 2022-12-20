@@ -7,11 +7,12 @@ class BCOLORS:
     HEADER = "\033[95m"
     OKBLUE = "\033[94m"
     OKCYAN = "\033[96m"
+    FAIL = "\033[91m"
     BOLD = "\033[1m"
 
 def format_result(result):
     header = result.keys()
-    row = [[result[x] for x in test]]
+    row = [[result[x] for x in result]]
     print(tabulate.tabulate(row, header))   
 
 
@@ -36,12 +37,13 @@ def main(args):
                 else:
                     print(f"App Inspect returned {failures} failures.")
                     print("::set-output name=status::fail")
-                    pprint(result["summary"])
-                    print("Failure List:")
+                    print(f'{BCOLORS.OKBLUE}{BCOLORS.BOLD} SUMMARY')
+                    format_result(result["summary"])
+                    print(f'{BCOLORS.OKBLUE}{BCOLORS.BOLD} Failure List:')
                     for group in result["reports"][0]["groups"]:
                         for check in group["checks"]:
                             if check["result"] == "failure":
-                                print(check["name"])
+                                print(f'{BCOLORS.FAIL}check["name"]')
                                 for msg in check["messages"]:
                                     print(msg["message"])
                     sys.exit(1)
