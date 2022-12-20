@@ -7,6 +7,7 @@ class BCOLORS:
     HEADER = "\033[95m"
     OKBLUE = "\033[94m"
     OKCYAN = "\033[96m"
+    BOLD = "\033[1m"
 
 def format_result(result):
     header = result.keys()
@@ -29,7 +30,8 @@ def main(args):
                                 if check["result"] == "warning":
                                     for msg in check["messages"]:
                                         print(msg["message"])
-                    pprint(result["summary"])
+                    print(f'{BCOLORS.OKBLUE}{BCOLORS.BOLD} SUMMARY')
+                    format_result(result["summary"])
                     print("::set-output name=status::pass")
                 else:
                     print(f"App Inspect returned {failures} failures.")
