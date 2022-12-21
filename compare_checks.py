@@ -4,6 +4,7 @@ import sys
 from typing import List
 
 import yaml
+import re
 
 print(
     f"{os.path.basename(__file__)} script was called with parameters: {' '.join(sys.argv[1:])}"
