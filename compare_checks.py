@@ -105,9 +105,9 @@ def compare(
             print(
             f"{BCOLORS.FAIL}{BCOLORS.BOLD}All verified {check_type} checks require comment with proper tickiet id. Below checks are not commented with required tickiet id"
             f" {vetting_file}:{BCOLORS.ENDC}"
-            for check in checks_with_no_id:
-                print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
         )
+        for check in checks_with_no_id:
+            print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
 
     return new_checks + not_commented + checks_with_no_id
 
