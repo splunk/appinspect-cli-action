@@ -101,6 +101,11 @@ def compare(
     checks_with_no_id = []
     if check_type=="failure":
         checks_with_no_id = validate_comment(vetting_data)
+        if checks_with_no_id:
+            print(
+            f"{BCOLORS.FAIL}{BCOLORS.BOLD}All verified {check_type} checks require comment with proper tickiet id. Below checks are not commented with required tickiet id"
+            f" {vetting_file}:{BCOLORS.ENDC}"
+        )
 
     return new_checks + not_commented + checks_with_no_id
 
