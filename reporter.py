@@ -38,7 +38,7 @@ def main(args):
                     format_result(result["summary"])
                     print("::set-output name=status::pass")
                 else:
-                    print(f"App Inspect returned {failures} failures.")
+                    print(f"{BCOLORS.BOLD}{BCOLORS.FAIL}App Inspect returned {failures} failures.")
                     print("::set-output name=status::fail")
                     print(f'{BCOLORS.OKBLUE}{BCOLORS.BOLD} SUMMARY')
                     format_result(result["summary"])

@@ -25,6 +25,14 @@ class BCOLORS:
     BOLD = "\033[1m"
     UNDERLINE = "\033[4m"
 
+def validate_comment(vetting_dat):
+    checks = []
+    ticket_id=re.compile(r"((ADDON|APPCERT)-[0-9]+)")
+    for check, info in vetting_data.items():
+        if not re.search(ticket_id,info.get("comment")):
+            checks.append(check)
+    return checks
+
 
 def compare(
     check_type: str,
@@ -89,8 +97,11 @@ def compare(
         print(
             f"{BCOLORS.FAIL}{BCOLORS.BOLD}Please see appinspect report for more detailed description about {check_type} checks and review them accordingly.{BCOLORS.ENDC}"
         )
+    checks_with_no_id = []
+    if check_type=="failure":
+        checks_with_no_id = validate_comment(vetting_data)
 
-    return new_checks + not_commented
+    return new_checks + not_commented + checks_with_no_id
 
 
 def get_checks_from_appinspect_result(
