@@ -26,7 +26,7 @@ class BCOLORS:
     BOLD = "\033[1m"
     UNDERLINE = "\033[4m"
 
-def validate_comment(vetting_dat):
+def validate_comment(vetting_data):
     checks = []
     ticket_id=re.compile(r"((ADDON|APPCERT)-[0-9]+)")
     for check, info in vetting_data.items():
