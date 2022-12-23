@@ -103,7 +103,7 @@ def compare(
         checks_with_no_id = validate_comment(vetting_data)
         if checks_with_no_id:
             print(
-            f"{BCOLORS.FAIL}{BCOLORS.BOLD}All verified {check_type} checks require comment with proper ticket id. Below checks are not commented with required ticket id"
+            f"{BCOLORS.FAIL}{BCOLORS.BOLD}All {check_type} checks require comment with proper ticket id. Below checks are not commented with required ticket id"
             f" {vetting_file}:{BCOLORS.ENDC}"
         )
         for check in checks_with_no_id:
