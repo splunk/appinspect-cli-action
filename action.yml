@@ -21,7 +21,7 @@ inputs:
   app_vetting_expected_failures:
     description: "Path to app vetting yaml file for expected failures"
     required: false
-    default: ".appinspect.expected.failure.yaml"
+    default: ".appinspect.expect.yaml"
   manual_check_markdown:
     description: "Path for generated file with markdown for manual checks"
     required: false

@@ -28,7 +28,7 @@ class BCOLORS:
 
 def validate_comment(vetting_data):
     checks = []
-    ticket_id=re.compile(r"((ADDON|APPCERT)-[0-9]+)")
+    ticket_id=re.compile(r"((?i)(ADDON|APPCERT)-[0-9]+)")
     for check, info in vetting_data.items():
         if not re.search(ticket_id,info.get("comment")):
             checks.append(check)
@@ -103,11 +103,11 @@ def compare(
         checks_with_no_id = validate_comment(vetting_data)
         if checks_with_no_id:
             print(
-            f"{BCOLORS.FAIL}{BCOLORS.BOLD}All {check_type} checks require comment with proper ticket id. Below checks are not commented with required ticket id"
+            f"{BCOLORS.FAIL}{BCOLORS.BOLD}There are some checks which require comment with proper ticket id in {vetting_file}. Below checks are not commented with required ticket id"
             f" {vetting_file}:{BCOLORS.ENDC}"
         )
-        for check in checks_with_no_id:
-            print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
+            for check in checks_with_no_id:
+                print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
 
     return new_checks + not_commented + checks_with_no_id
 
