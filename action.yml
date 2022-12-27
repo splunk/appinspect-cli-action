@@ -14,20 +14,20 @@ inputs:
   excluded_tags:
     description: "Tags to exclude"
     required: false
-  app_vetting_manual_checks:
-    description: "Path to app vetting yaml file for manual checks"
+  appinspect_manual_checks:
+    description: "Path to app vetting yaml for manual checks"
     required: false
-    default: ".app-vetting.yaml"
-  app_vetting_expected_failures:
-    description: "Path to app vetting yaml file for expected failures"
+    default: ".appinspect.manual.check"
+  appinspect_expected_failures:
+    description: "Path to app vetting yaml for expected appinspect failures"
     required: false
-    default: ".appinspect.expect.yaml"
+    default: ".appinspect.expect"
   manual_check_markdown:
-    description: "Path for generated file with markdown for manual checks"
+    description: "Path to generated file with markdown for manual checks"
     required: false
     default: "manual_check_markdown.txt"
   expected_failure_markdown:
-    description: "Path for generated file with markdown for exceptions"
+    description: "Path to generated file with markdown for exceptions"
     required: false
     default: "expected_failure_markdown.txt"
 outputs:

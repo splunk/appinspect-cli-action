@@ -13,10 +13,9 @@ class BCOLORS:
     BOLD = "\033[1m"
 
 def format_result(result):
-    header = result.keys()
-    row = [[result[x] for x in result]]
-    print(tabulate.tabulate(row, header))   
-
+    restructured_result = ["success","manual_check","not_applicable","skipped","warning","error","failure"]
+    row = [[result[x] for x in restructured_result]]
+    print(tabulate.tabulate(row, restructured_result))
 
 def main(args):
     try:
