@@ -12,4 +12,4 @@ COPY export_to_markdown.py /
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
 WORKDIR /github/workspace
-ENTRYPOINT ["bash", "-x", "/entrypoint.sh"]
+ENTRYPOINT ["bash", "/entrypoint.sh"]

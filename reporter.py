@@ -35,10 +35,10 @@ def main(args):
                                         print(msg["message"])
                     print(f'{BCOLORS.OKBLUE}{BCOLORS.BOLD} SUMMARY')
                     format_result(result["summary"])
-                    print("::set-output name=status::pass")
+                    # print("::set-output name=status::pass")
                 else:
                     print(f"{BCOLORS.BOLD}{BCOLORS.FAIL}App Inspect returned {failures} failures.")
-                    print("::set-output name=status::fail")
+                    # print("::set-output name=status::fail")
                     print(f'{BCOLORS.OKBLUE}{BCOLORS.BOLD} SUMMARY')
                     format_result(result["summary"])
                     print(f'{BCOLORS.OKBLUE}{BCOLORS.BOLD} Failure List:')
@@ -51,7 +51,7 @@ def main(args):
                     sys.exit(1)
             else:
                 print("Unexpected JSON format")
-                print("::set-output name=status::fail")
+                # print("::set-output name=status::fail")
                 sys.exit(1)
     except Exception as e:
         print(f"An error occurred {str(e)}")
