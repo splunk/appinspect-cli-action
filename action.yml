@@ -17,7 +17,7 @@ inputs:
   appinspect_manual_checks:
     description: "Path to app vetting yaml for manual checks"
     required: false
-    default: ".appinspect.manual.check"
+    default: ".appinspect.manualcheck"
   appinspect_expected_failures:
     description: "Path to app vetting yaml for expected appinspect failures"
     required: false
