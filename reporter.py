@@ -36,12 +36,10 @@ def main(args):
                                         print(msg["message"])
                     print(f'{BCOLORS.OKBLUE}{BCOLORS.BOLD} SUMMARY')
                     format_result(result["summary"])
-                    # print("::set-output name=status::pass")
                     with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
                         print("status=pass", file=fh)
                 else:
                     print(f"{BCOLORS.BOLD}{BCOLORS.FAIL}App Inspect returned {failures} failures.")
-                    # print("::set-output name=status::fail")
                     with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
                         print("status=fail", file=fh)
                     print(f'{BCOLORS.OKBLUE}{BCOLORS.BOLD} SUMMARY')
@@ -56,7 +54,6 @@ def main(args):
                     sys.exit(1)
             else:
                 print("Unexpected JSON format")
-                # print("::set-output name=status::fail")
                 with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
                     print("status=fail", file=fh)
                 sys.exit(1)

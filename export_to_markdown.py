@@ -9,7 +9,7 @@ MARKDOWN_START = """<div class=3D"table-wrap">
 <table class=3D"confluenceTable">
 <tbody>
 <tr>
-<th class=3D"confluenceTh">manual check</th>
+<th class=3D"confluenceTh">check</th>
 <th class=3D"confluenceTh">comment</th>
 </tr>
 """
