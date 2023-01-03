@@ -58,7 +58,6 @@ echo "::endgroup::"
 if [ $exit_code_failure == 0 ] && [ $exit_code_manual_check == 0 ] ; then
   echo "::group::generate_markdown"
   echo "successful comparison, generating markdown"
-  echo "/export_to_markdown.py $INPUT_APPINSPECT_MANUAL_CHECKS $INPUT_MANUAL_CHECK_MARKDOWN"
   python3 /export_to_markdown.py $INPUT_APPINSPECT_MANUAL_CHECKS $INPUT_MANUAL_CHECK_MARKDOWN
   python3 /export_to_markdown.py $INPUT_APPINSPECT_EXPECTED_FAILURES $INPUT_EXPECTED_FAILURE_MARKDOWN
   echo "::endgroup::"

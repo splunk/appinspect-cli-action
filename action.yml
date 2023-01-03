@@ -1,9 +1,9 @@
 # action.yml
 name: "Splunk AppInspect"
-description: "Run Splunk App insect on a Splunk app directory."
+description: "Run Splunk App inspect on a Splunk app directory."
 inputs:
   app_path:
-    description: "path to the application directory to be inspected"
+    description: "Path to the application directory to be inspected"
     default: build/splunkbase
   result_file:
     description: "json result file name"
@@ -15,11 +15,11 @@ inputs:
     description: "Tags to exclude"
     required: false
   appinspect_manual_checks:
-    description: "Path to app vetting yaml for manual checks"
+    description: "Path to file with list of manual checks"
     required: false
     default: ".appinspect.manualcheck"
   appinspect_expected_failures:
-    description: "Path to app vetting yaml for expected appinspect failures"
+    description: "Path to file with list of expected appinspect failures"
     required: false
     default: ".appinspect.expect"
   manual_check_markdown:
