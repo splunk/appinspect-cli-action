@@ -1,4 +1,5 @@
 import json
+import os
 import sys
 from pprint import pprint
 
@@ -19,10 +20,12 @@ def main(args):
                                     for msg in check["messages"]:
                                         print(msg["message"])
                     pprint(result["summary"])
-                    print("::set-output name=status::pass")
+                    with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
+                        print("status=pass", file=fh)
                 else:
                     print(f"App Inspect returned {failures} failures.")
-                    print("::set-output name=status::fail")
+                    with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
+                        print("status=fail", file=fh)
                     pprint(result["summary"])
                     print("Failure List:")
                     for group in result["reports"][0]["groups"]:
@@ -33,7 +36,8 @@ def main(args):
                     sys.exit(1)
             else:
                 print("Unexpected JSON format")
-                print("::set-output name=status::fail")
+                with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
+                    print("status=fail", file=fh)
                 sys.exit(1)
     except Exception as e:
         print(f"An error occurred {str(e)}")
