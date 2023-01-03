@@ -42,11 +42,11 @@ python3 /reporter.py $INPUT_RESULT_FILE
 exit_code=$?
 echo "::endgroup::"
 
-exit_code_failure=$exit_code
+exit_code_failure_check=$exit_code
 if [ $exit_code != 0 ]; then
   echo "::group::failure_checks"
   python3 /compare_checks.py $INPUT_APPINSPECT_EXPECTED_FAILURES $INPUT_RESULT_FILE "failure"
-  exit_code_failure=$?
+  exit_code_failure_check=$?
   echo "::endgroup::"
 fi
 
@@ -55,7 +55,7 @@ python3 /compare_checks.py $INPUT_APPINSPECT_MANUAL_CHECKS $INPUT_RESULT_FILE "m
 exit_code_manual_check=$?
 echo "::endgroup::"
 
-if [ $exit_code_failure == 0 ] && [ $exit_code_manual_check == 0 ] ; then
+if [ $exit_code_failure_check == 0 ] && [ $exit_code_manual_check == 0 ] ; then
   echo "::group::generate_markdown"
   echo "successful comparison, generating markdown"
   python3 /export_to_markdown.py $INPUT_APPINSPECT_MANUAL_CHECKS $INPUT_MANUAL_CHECK_MARKDOWN
@@ -63,4 +63,4 @@ if [ $exit_code_failure == 0 ] && [ $exit_code_manual_check == 0 ] ; then
   echo "::endgroup::"
 fi
 
-exit "$(($exit_code_failure || $exit_code_manual_check))"
+exit "$(($exit_code_failure_check || $exit_code_manual_check))"

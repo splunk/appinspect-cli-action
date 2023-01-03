@@ -23,11 +23,11 @@ inputs:
     required: false
     default: ".appinspect.expect"
   manual_check_markdown:
-    description: "Path to generated file with markdown for manual checks"
+    description: "Path for generated file with markdown for manual checks"
     required: false
     default: "manual_check_markdown.txt"
   expected_failure_markdown:
-    description: "Path to generated file with markdown for expected appinspect failures"
+    description: "Path for generated file with markdown for expected appinspect failures"
     required: false
     default: "expected_failure_markdown.txt"
 outputs:

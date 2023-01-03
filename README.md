@@ -80,7 +80,7 @@ name_of_exception_2:
 Please note that your comment can't be empty, it must include ticket id of ADDON/APPCERT project associated with the exception and the names of exceptions should be aligned with those from `result_file`.
 
 ### Running the job
-When `appinspect-cli-action` is called, it scans the package with Splunk's AppInspect CLI. If there are any failures observed then action compares `results_file` with `.appinspect.expect`. If that failure isn't present in `appinspect.expect` or it does not contain an appropriate comment(containing ADDON/APPCERT ticket id associated with the exception) then the job fails with proper failure reason. In the next step, action compares `results_file` with `.appinspect.manualcheck`. If any manual check wasn't reviewed and isn't in `.appinspect.manualcheck` then the job fails.
+When `appinspect-cli-action` is called, it scans the package with Splunk's AppInspect CLI. If there are any failures observed then action compares `results_file` with `.appinspect.expect`. If that failure isn't present in `appinspect.expect` or it does not contain an appropriate comment(containing ADDON/APPCERT ticket id associated with the exception) then the job fails with proper failure reason. In the next step, action compares `results_file` with `.appinspect.manualcheck`. If any manual check wasn't reviewed by addon developer and isn't in `.appinspect.manualcheck` then the job fails.
 
 ## Example usage
 
@@ -96,7 +96,7 @@ If the comparison is successful then a markdown consisting a table with check na
 - uses: splunk/appinspect-cli-action@v1.3
   with:
     app_path: 'test'
-    included_tags: cloud
+    included_tags: {appinspect-tags-to-include}
     manual_check_markdown: manual_check_markdown.txt
     expected_failure_markdown: expected_failure_markdown.txt
 - name: upload-manual-check-markodown
