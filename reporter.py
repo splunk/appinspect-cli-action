@@ -1,8 +1,7 @@
 import json
+import os
 import sys
 import tabulate
-import os
-from pprint import pprint
 
 class BCOLORS:
     HEADER = "\033[95m"

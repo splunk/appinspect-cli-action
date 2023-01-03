@@ -15,11 +15,11 @@ inputs:
     description: "Tags to exclude"
     required: false
   appinspect_manual_checks:
-    description: "Path to file with list of manual checks"
+    description: "Path to file which contains list of manual checks"
     required: false
     default: ".appinspect.manualcheck"
   appinspect_expected_failures:
-    description: "Path to file with list of expected appinspect failures"
+    description: "Path to file which contains list of expected appinspect failures"
     required: false
     default: ".appinspect.expect"
   manual_check_markdown:
@@ -27,7 +27,7 @@ inputs:
     required: false
     default: "manual_check_markdown.txt"
   expected_failure_markdown:
-    description: "Path to generated file with markdown for exceptions"
+    description: "Path to generated file with markdown for expected appinspect failures"
     required: false
     default: "expected_failure_markdown.txt"
 outputs:
