@@ -26,6 +26,7 @@ class BCOLORS:
     BOLD = "\033[1m"
     UNDERLINE = "\033[4m"
 
+
 def validate_comment(vetting_data):
     checks = []
     ticket_id = re.compile(r"((?i)(ADDON|APPCERT)-[0-9]+)")
@@ -105,7 +106,7 @@ def compare(
             print(
                 f"{BCOLORS.FAIL}{BCOLORS.BOLD}There are some checks which require comment with proper ticket id in {vetting_file}. Below checks are not commented with required ticket id in"
                 f" {vetting_file}:{BCOLORS.ENDC}"
-        )
+            )
             for check in checks_with_no_id:
                 print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
 

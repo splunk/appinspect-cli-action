@@ -1,7 +1,9 @@
 import json
 import os
 import sys
+
 import tabulate
+
 
 class BCOLORS:
     HEADER = "\033[95m"
@@ -12,6 +14,7 @@ class BCOLORS:
     FAIL = "\033[91m"
     BOLD = "\033[1m"
 
+
 def format_result(result):
     restructured_result = [
         "success",
@@ -20,10 +23,11 @@ def format_result(result):
         "skipped",
         "warning",
         "error",
-        "failure"
+        "failure",
     ]
     row = [[result[x] for x in restructured_result]]
     print(tabulate.tabulate(row, restructured_result))
+
 
 def main(args):
     try:
