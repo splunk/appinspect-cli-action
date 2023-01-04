@@ -1,7 +1,32 @@
 import json
 import os
 import sys
-from pprint import pprint
+
+import tabulate
+
+
+class BCOLORS:
+    HEADER = "\033[95m"
+    OKBLUE = "\033[94m"
+    OKCYAN = "\033[96m"
+    OKGREEN = "\033[92m"
+    WARNING = "\033[93m"
+    FAIL = "\033[91m"
+    BOLD = "\033[1m"
+
+
+def format_result(result):
+    restructured_result = [
+        "success",
+        "manual_check",
+        "not_applicable",
+        "skipped",
+        "warning",
+        "error",
+        "failure",
+    ]
+    row = [[result[x] for x in restructured_result]]
+    print(tabulate.tabulate(row, restructured_result))
 
 
 def main(args):
@@ -11,26 +36,32 @@ def main(args):
             if "summary" in result and "failure" in result["summary"]:
                 failures = result["summary"]["failure"]
                 if failures == 0:
-                    print("App Inspect Passed!")
+                    print(f"{BCOLORS.BOLD}{BCOLORS.OKGREEN}App Inspect Passed!")
                     if "warning" in result["summary"] and result["summary"]["warning"]:
-                        print("Warning List:")
+                        print(f"{BCOLORS.OKBLUE}Warning List:")
                         for group in result["reports"][0]["groups"]:
                             for check in group["checks"]:
                                 if check["result"] == "warning":
+                                    print(f'{BCOLORS.WARNING} {check["name"]}')
                                     for msg in check["messages"]:
                                         print(msg["message"])
-                    pprint(result["summary"])
+                    print(f"{BCOLORS.OKBLUE}{BCOLORS.BOLD} SUMMARY")
+                    format_result(result["summary"])
                     with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
                         print("status=pass", file=fh)
                 else:
-                    print(f"App Inspect returned {failures} failures.")
+                    print(
+                        f"{BCOLORS.BOLD}{BCOLORS.FAIL}App Inspect returned {failures} failures."
+                    )
                     with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
                         print("status=fail", file=fh)
-                    pprint(result["summary"])
-                    print("Failure List:")
+                    print(f"{BCOLORS.OKBLUE}{BCOLORS.BOLD} SUMMARY")
+                    format_result(result["summary"])
+                    print(f"{BCOLORS.OKBLUE}{BCOLORS.BOLD} Failure List:")
                     for group in result["reports"][0]["groups"]:
                         for check in group["checks"]:
                             if check["result"] == "failure":
+                                print(f'{BCOLORS.FAIL} {check["name"]}')
                                 for msg in check["messages"]:
                                     print(msg["message"])
                     sys.exit(1)
