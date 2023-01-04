@@ -33,13 +33,13 @@ Appinspect tags to exclude
 Path to file which contains list of manual checks
 
 `required`: `false`
-`default`: `.appinspect.manualcheck`
+`default`: `.appinspect.manualcheck.yaml`
 
 ### `appinspect_expected_failures`
 Path to file which contains list of expected appinspect failures
 
 `required`: `false`
-`default`: `.appinspect.expect`
+`default`: `.appinspect.expect.yaml`
 
 ### `manual_check_markdown`
 Path to generated file with markdown for manual checks
@@ -60,7 +60,7 @@ Path to generated file with markdown for expected appinspect failures
 `pass|fail`
 
 ### Manual checks review
-To see checks to be verified, inspect the `result_file` from `appinspect-cli-action`. Verify manual checks and mark them as reviewed by adding them one by one into `.appinspect.manualcheck`, ex:
+To see checks to be verified, inspect the `result_file` from `appinspect-cli-action`. Verify manual checks and mark them as reviewed by adding them one by one into `.appinspect.manualcheck.yaml`, ex:
 ```yml
 name_of_manual_check_1:
   comment: 'your comment'
@@ -70,7 +70,7 @@ name_of_manual_check_2:
 Please note that names of validated manual checks should be aligned with those from `result_file` and your comment can't be empty.
 
 ### Failure checks review 
-To mark Failures as expected, add them into `.appinspect.expect` with proper comment containing ticket id of ADDON/APPCERT project associated with the exception, ex:
+To mark Failures as expected, add them into `.appinspect.expect.yaml` with proper comment containing ticket id of ADDON/APPCERT project associated with the exception, ex:
 ```yml
 name_of_exception_1:
   comment: 'ADDON-123: your comment'
@@ -80,7 +80,7 @@ name_of_exception_2:
 Please note that your comment can't be empty, it must include ticket id of ADDON/APPCERT project associated with the exception and the names of exceptions should be aligned with those from `result_file`.
 
 ### Running the job
-When `appinspect-cli-action` is called, it scans the package with Splunk's AppInspect CLI. If there are any failures observed then action compares `results_file` with `.appinspect.expect`. If that failure isn't present in `appinspect.expect` or it does not contain an appropriate comment(containing ADDON/APPCERT ticket id associated with the exception) then the job fails with proper failure reason. In the next step, action compares `results_file` with `.appinspect.manualcheck`. If any manual check wasn't reviewed by addon developer and isn't in `.appinspect.manualcheck` then the job fails.
+When `appinspect-cli-action` is called, it scans the package with Splunk's AppInspect CLI. If there are any failures observed then action compares `results_file` with `.appinspect.expect.yaml`. If that failure isn't present in `.appinspect.expect.yaml` or it does not contain an appropriate comment(containing ADDON/APPCERT ticket id associated with the exception) then the job fails with proper failure reason. In the next step, action compares `results_file` with `.appinspect.manualcheck.yaml`. If any manual check wasn't reviewed by addon developer and isn't in `.appinspect.manualcheck.yaml` then the job fails.
 
 ## Example usage
 

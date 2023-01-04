@@ -37,7 +37,7 @@ def validate_comment(vetting_data):
 
 def compare(
     check_type: str,
-    vetting_file: str = ".appinspect.manualcheck",
+    vetting_file: str = ".appinspect.manualcheck.yaml",
     appinspect_result_file: str = "appinspect_output.json",
 ) -> List[str]:
     """

@@ -17,11 +17,11 @@ inputs:
   appinspect_manual_checks:
     description: "Path to file which contains list of manual checks"
     required: false
-    default: ".appinspect.manualcheck"
+    default: ".appinspect.manualcheck.yaml"
   appinspect_expected_failures:
     description: "Path to file which contains list of expected appinspect failures"
     required: false
-    default: ".appinspect.expect"
+    default: ".appinspect.expect.yaml"
   manual_check_markdown:
     description: "Path for generated file with markdown for manual checks"
     required: false
