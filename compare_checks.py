@@ -4,6 +4,7 @@ import sys
 from typing import List
 
 import yaml
+import re
 
 print(
     f"{os.path.basename(__file__)} script was called with parameters: {' '.join(sys.argv[1:])}"
@@ -25,19 +26,27 @@ class BCOLORS:
     BOLD = "\033[1m"
     UNDERLINE = "\033[4m"
 
+def validate_comment(vetting_data):
+    checks = []
+    ticket_id=re.compile(r"((?i)(ADDON|APPCERT)-[0-9]+)")
+    for check, info in vetting_data.items():
+        if not re.search(ticket_id,info.get("comment")):
+            checks.append(check)
+    return checks
+
 
 def compare(
     check_type: str,
-    vetting_file: str = ".app-vetting.yaml",
+    vetting_file: str = ".appinspect.manualcheck.yaml",
     appinspect_result_file: str = "appinspect_output.json",
 ) -> List[str]:
     """
     Compares checks from vetting file and appinspect result file. A lot prints are added to make it
     easier for users to create proper vetting_file and understand errors
 
-    :param vetting_file: path to yaml file with verified manual checks
+    :param vetting_file: path to file with varified list of checks
     :param appinspect_result_file: path to Splunk's AppInspect CLI result file
-    :return: list of non matching tests between vetting_file and appinspect_result_file or not commented ones
+    :return: list of non matching tests between vetting_file and appinspect_result_file or not commented ones or checks with inappropriate comment
     """
     if not os.path.isfile(appinspect_result_file):
         raise FileNotFoundError(
@@ -89,28 +98,38 @@ def compare(
         print(
             f"{BCOLORS.FAIL}{BCOLORS.BOLD}Please see appinspect report for more detailed description about {check_type} checks and review them accordingly.{BCOLORS.ENDC}"
         )
+    checks_with_no_id = []
+    if check_type=="failure":
+        checks_with_no_id = validate_comment(vetting_data)
+        if checks_with_no_id:
+            print(
+            f"{BCOLORS.FAIL}{BCOLORS.BOLD}There are some checks which require comment with proper ticket id in {vetting_file}. Below checks are not commented with required ticket id"
+            f" {vetting_file}:{BCOLORS.ENDC}"
+        )
+            for check in checks_with_no_id:
+                print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")
 
-    return new_checks + not_commented
+    return new_checks + not_commented + checks_with_no_id
 
 
 def get_checks_from_appinspect_result(
     path: str, result: str = "manual_check"
 ) -> List[str]:
     """
-    Returns manual checks from appinspect json result file
+    Returns checks from appinspect json result file
 
     :param path: path to json result file
     :return: list of checks in string format
     """
-    manual_checks = []
+    checks = []
     with open(path) as f:
         appinspect_results = json.load(f)
         for report in appinspect_results["reports"]:
             for group in report["groups"]:
                 for check in group["checks"]:
                     if check["result"] == result:
-                        manual_checks.append(check["name"])
-    return manual_checks
+                        checks.append(check["name"])
+    return checks
 
 
 def main():

@@ -42,23 +42,25 @@ python3 /reporter.py $INPUT_RESULT_FILE
 exit_code=$?
 echo "::endgroup::"
 
+exit_code_failure_check=$exit_code
 if [ $exit_code != 0 ]; then
   echo "::group::failure_checks"
-  python3 /compare_checks.py $INPUT_APP_VETTING $INPUT_RESULT_FILE "failure"
-  exit_code=$?
+  python3 /compare_checks.py $INPUT_APPINSPECT_EXPECTED_FAILURES $INPUT_RESULT_FILE "failure"
+  exit_code_failure_check=$?
   echo "::endgroup::"
 fi
 
-if [[ "$INPUT_INCLUDED_TAGS" == *"manual"* ]] && [ $exit_code == 0 ]; then
-  echo "::group::manual_checks"
-  python3 /compare_checks.py $INPUT_APP_VETTING $INPUT_RESULT_FILE "manual_check"
-  exit_code=$?
-  if [ $exit_code == 0 ]; then
-    echo "successful comparison, generating markdown"
-    echo "/export_to_markdown.py $INPUT_APP_VETTING $INPUT_MANUAL_CHECK_MARKDOWN"
-    python3 /export_to_markdown.py $INPUT_APP_VETTING $INPUT_MANUAL_CHECK_MARKDOWN
-  fi
+echo "::group::manual_checks"
+python3 /compare_checks.py $INPUT_APPINSPECT_MANUAL_CHECKS $INPUT_RESULT_FILE "manual_check"
+exit_code_manual_check=$?
+echo "::endgroup::"
+
+if [ $exit_code_failure_check == 0 ] && [ $exit_code_manual_check == 0 ] ; then
+  echo "::group::generate_markdown"
+  echo "successful comparison, generating markdown"
+  python3 /export_to_markdown.py $INPUT_APPINSPECT_MANUAL_CHECKS $INPUT_MANUAL_CHECK_MARKDOWN
+  python3 /export_to_markdown.py $INPUT_APPINSPECT_EXPECTED_FAILURES $INPUT_EXPECTED_FAILURE_MARKDOWN
   echo "::endgroup::"
 fi
 
-exit "$exit_code"
+exit "$(($exit_code_failure_check || $exit_code_manual_check))"
