@@ -1,10 +1,10 @@
 import json
 import os
+import re
 import sys
 from typing import List
 
 import yaml
-import re
 
 print(
     f"{os.path.basename(__file__)} script was called with parameters: {' '.join(sys.argv[1:])}"
@@ -28,9 +28,9 @@ class BCOLORS:
 
 def validate_comment(vetting_data):
     checks = []
-    ticket_id=re.compile(r"((?i)(ADDON|APPCERT)-[0-9]+)")
+    ticket_id = re.compile(r"((?i)(ADDON|APPCERT)-[0-9]+)")
     for check, info in vetting_data.items():
-        if not re.search(ticket_id,info.get("comment")):
+        if not re.search(ticket_id, info.get("comment")):
             checks.append(check)
     return checks
 
@@ -99,12 +99,12 @@ def compare(
             f"{BCOLORS.FAIL}{BCOLORS.BOLD}Please see appinspect report for more detailed description about {check_type} checks and review them accordingly.{BCOLORS.ENDC}"
         )
     checks_with_no_id = []
-    if check_type=="failure":
+    if check_type == "failure":
         checks_with_no_id = validate_comment(vetting_data)
         if checks_with_no_id:
             print(
-            f"{BCOLORS.FAIL}{BCOLORS.BOLD}There are some checks which require comment with proper ticket id in {vetting_file}. Below checks are not commented with required ticket id"
-            f" {vetting_file}:{BCOLORS.ENDC}"
+                f"{BCOLORS.FAIL}{BCOLORS.BOLD}There are some checks which require comment with proper ticket id in {vetting_file}. Below checks are not commented with required ticket id in"
+                f" {vetting_file}:{BCOLORS.ENDC}"
         )
             for check in checks_with_no_id:
                 print(f"{BCOLORS.FAIL}{BCOLORS.BOLD}\t{check}{BCOLORS.ENDC}")

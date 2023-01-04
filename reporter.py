@@ -13,7 +13,15 @@ class BCOLORS:
     BOLD = "\033[1m"
 
 def format_result(result):
-    restructured_result = ["success","manual_check","not_applicable","skipped","warning","error","failure"]
+    restructured_result = [
+        "success",
+        "manual_check",
+        "not_applicable",
+        "skipped",
+        "warning",
+        "error",
+        "failure"
+    ]
     row = [[result[x] for x in restructured_result]]
     print(tabulate.tabulate(row, restructured_result))
 
@@ -33,17 +41,19 @@ def main(args):
                                     print(f'{BCOLORS.WARNING} {check["name"]}')
                                     for msg in check["messages"]:
                                         print(msg["message"])
-                    print(f'{BCOLORS.OKBLUE}{BCOLORS.BOLD} SUMMARY')
+                    print(f"{BCOLORS.OKBLUE}{BCOLORS.BOLD} SUMMARY")
                     format_result(result["summary"])
                     with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
                         print("status=pass", file=fh)
                 else:
-                    print(f"{BCOLORS.BOLD}{BCOLORS.FAIL}App Inspect returned {failures} failures.")
+                    print(
+                        f"{BCOLORS.BOLD}{BCOLORS.FAIL}App Inspect returned {failures} failures."
+                    )
                     with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
                         print("status=fail", file=fh)
-                    print(f'{BCOLORS.OKBLUE}{BCOLORS.BOLD} SUMMARY')
+                    print(f"{BCOLORS.OKBLUE}{BCOLORS.BOLD} SUMMARY")
                     format_result(result["summary"])
-                    print(f'{BCOLORS.OKBLUE}{BCOLORS.BOLD} Failure List:')
+                    print(f"{BCOLORS.OKBLUE}{BCOLORS.BOLD} Failure List:")
                     for group in result["reports"][0]["groups"]:
                         for check in group["checks"]:
                             if check["result"] == "failure":
