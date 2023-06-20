@@ -25,6 +25,12 @@ on:
       - "main"
       - "develop"
 
+permissions:
+  contents: write
+  packages: write
+  pull-requests: read
+  statuses: write
+
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
@@ -36,9 +42,6 @@ jobs:
       - uses: pre-commit/action@v3.0.0
   build_action:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
