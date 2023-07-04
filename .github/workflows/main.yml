@@ -40,11 +40,11 @@ jobs:
         with:
           python-version: "3.7"
       - uses: pre-commit/action@v3.0.0
+
   build_action:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           submodules: recursive
           persist-credentials: false
@@ -88,13 +88,22 @@ jobs:
           cache-to: type=inline
 
       - name: Semantic Release
-        uses: splunk/semantic-release-action@v1.2
+        uses: splunk/semantic-release-action@v1.3
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ADMIN }}
+        with:
+          git_committer_name: ${{ secrets.SA_GH_USER_NAME }}
+          git_committer_email: ${{ secrets.SA_GH_USER_EMAIL }}
+          gpg_private_key: ${{ secrets.SA_GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SA_GPG_PASSPHRASE }}
+          extra_plugins: |
+            @google/semantic-release-replace-plugin
+
   update-semver:
-    name: Move Respository semver tags
     if: startsWith(github.ref, 'refs/tags/v')
     needs: build_action
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
