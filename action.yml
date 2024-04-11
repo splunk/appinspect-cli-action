@@ -35,4 +35,4 @@ outputs:
     description: "value is success/fail based on app inspect result"
 runs:
   using: "docker"
-  image: "docker://ghcr.io/splunk/appinspect-cli-action/appinspect-cli-action:v2.5.0"
+  image: "docker://ghcr.io/splunk/appinspect-cli-action/appinspect-cli-action:v2.6.0"
