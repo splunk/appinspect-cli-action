@@ -1,5 +1,5 @@
 # Container image that runs your code
-FROM python:3.7.10
+FROM python:3.9.18
 
 COPY requirements.txt /
 RUN pip install --no-cache-dir --prefer-binary -r /requirements.txt
