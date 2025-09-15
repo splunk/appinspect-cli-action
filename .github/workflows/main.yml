@@ -35,7 +35,7 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -44,7 +44,7 @@ jobs:
   build_action:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: recursive
           persist-credentials: false
@@ -104,7 +104,7 @@ jobs:
     needs: build_action
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: splunk/addonfactory-update-semver@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ADMIN }}
