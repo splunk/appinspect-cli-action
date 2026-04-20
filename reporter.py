@@ -18,14 +18,14 @@ class BCOLORS:
 def format_result(result):
     restructured_result = [
         "success",
-        "manual_check",
         "not_applicable",
         "skipped",
         "warning",
+        "future_failure",
         "error",
         "failure",
     ]
-    row = [[result[x] for x in restructured_result]]
+    row = [[result.get(x, 0) for x in restructured_result]]
     print(tabulate.tabulate(row, restructured_result))
 
 
