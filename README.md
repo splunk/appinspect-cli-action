@@ -60,7 +60,7 @@ Path to generated file with markdown for expected appinspect failures
 `pass|fail`
 
 ### Manual checks review
-To see checks to be verified, inspect the `result_file` from `appinspect-cli-action`. Verify manual checks and mark them as reviewed by adding them one by one into `.appinspect.manualcheck.yaml`, ex:
+To see checks to be verified, inspect the `result_file` from `appinspect-cli-action`. Verify manual checks and mark them as reviewed by adding them one by one into `.appinspect.manualcheck.yaml`, for example:
 ```yml
 name_of_manual_check_1:
   comment: 'your comment'
@@ -70,7 +70,7 @@ name_of_manual_check_2:
 Please note that names of validated manual checks should be aligned with those from `result_file` and your comment can't be empty.
 
 ### Failure checks review 
-To mark Failures as expected, add them into `.appinspect.expect.yaml` with proper comment containing ticket id of ADDON/APPCERT project associated with the exception, ex:
+To mark Failures as expected, add them into `.appinspect.expect.yaml` with proper comment containing ticket id of ADDON/APPCERT project associated with the exception, for example:
 ```yml
 name_of_exception_1:
   comment: 'ADDON-123: your comment'
