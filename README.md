@@ -23,11 +23,25 @@ The file name to use for the json result.
 Appinspect tags to include
 
 `required`: `false`
+
+Pass one tag or a comma-separated list. The action passes each tag to AppInspect as a separate `--included-tags` option:
+
+```yml
+with:
+  included_tags: cloud, self-service
+```
   
 ### `excluded_tags`
 Appinspect tags to exclude
 
 `required`: `false`
+
+Pass one tag or a comma-separated list. The action passes each tag to AppInspect as a separate `--excluded-tags` option:
+
+```yml
+with:
+  excluded_tags: cloud, self-service
+```
 
 ### `appinspect_manual_checks`
 Path to file which contains list of manual checks
