@@ -29,9 +29,13 @@ class BCOLORS:
 
 def validate_comment(vetting_data):
     checks = []
-    ticket_id = re.compile(r"((?i)(ADDON|APPCERT)-[0-9]+)")
+    # NB: the flag must be passed to re.compile, not written inline as "(?i)"
+    # inside a group. Python deprecated non-leading global flags in 3.6 and made
+    # them a hard error in 3.11 ("global flags not at the start of the
+    # expression"), so the inline form raises re.error on any modern interpreter.
+    ticket_id = re.compile(r"(ADDON|APPCERT)-[0-9]+", re.IGNORECASE)
     for check, info in vetting_data.items():
-        if not re.search(ticket_id, info.get("comment")):
+        if not re.search(ticket_id, info.get("comment") or ""):
             checks.append(check)
     return checks
 
