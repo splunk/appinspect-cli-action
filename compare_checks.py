@@ -29,9 +29,10 @@ class BCOLORS:
 
 def validate_comment(vetting_data):
     checks = []
-    ticket_id = re.compile(r"((?i)(ADDON|APPCERT)-[0-9]+)")
+    ticket_id = re.compile(r"(ADDON|APPCERT)-[0-9]+", re.IGNORECASE)
     for check, info in vetting_data.items():
-        if not re.search(ticket_id, info.get("comment")):
+        comment = info.get("comment")
+        if comment and not re.search(ticket_id, str(comment)):
             checks.append(check)
     return checks
 
