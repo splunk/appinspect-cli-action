@@ -10,6 +10,6 @@ updates:
     target-branch: "main"
     schedule:
       interval: "daily"
-cooldown:
-  exclude:
-    - splunk-appinspect
+    cooldown:
+      exclude:
+        - splunk-appinspect
