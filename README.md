@@ -28,7 +28,7 @@ Pass one tag or a comma-separated list. The action passes each tag to AppInspect
 
 ```yml
 with:
-  included_tags: cloud, self-service
+  included_tags: cloud, future
 ```
   
 ### `excluded_tags`
@@ -40,7 +40,7 @@ Pass one tag or a comma-separated list. The action passes each tag to AppInspect
 
 ```yml
 with:
-  excluded_tags: cloud, self-service
+  excluded_tags: cloud, future
 ```
 
 ### `appinspect_manual_checks`
