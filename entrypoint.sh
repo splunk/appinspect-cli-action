@@ -27,13 +27,37 @@ fi
 echo scan target $SCAN
 if [ ! -f $SCAN ]; then echo Unable to locate package $SCAN aborting; exit 1; fi;
 
-if [ ! -z $INPUT_INCLUDED_TAGS ]; then INCLUDED_TAGS="--included-tags ${INPUT_INCLUDED_TAGS}"; fi
-if [ ! -z $INPUT_EXCLUDED_TAGS ]; then EXCLUDED_TAGS="--excluded-tags ${INPUT_EXCLUDED_TAGS}"; fi
+INCLUDED_TAGS=()
+if [ -n "${INPUT_INCLUDED_TAGS:-}" ]; then
+    IFS=',' read -r -a tag_values <<< "$INPUT_INCLUDED_TAGS"
+    for tag in "${tag_values[@]}"; do
+        tag="${tag#"${tag%%[![:space:]]*}"}"
+        tag="${tag%"${tag##*[![:space:]]}"}"
+        if [ -z "$tag" ]; then
+            echo "included_tags must be a comma-separated list of tag names" >&2
+            exit 1
+        fi
+        INCLUDED_TAGS+=(--included-tags "$tag")
+    done
+fi
+EXCLUDED_TAGS=()
+if [ -n "${INPUT_EXCLUDED_TAGS:-}" ]; then
+    IFS=',' read -r -a tag_values <<< "$INPUT_EXCLUDED_TAGS"
+    for tag in "${tag_values[@]}"; do
+        tag="${tag#"${tag%%[![:space:]]*}"}"
+        tag="${tag%"${tag##*[![:space:]]}"}"
+        if [ -z "$tag" ]; then
+            echo "excluded_tags must be a comma-separated list of tag names" >&2
+            exit 1
+        fi
+        EXCLUDED_TAGS+=(--excluded-tags "$tag")
+    done
+fi
 
 echo "::group::appinspect"
 rm -f $INPUT_RESULT_FILE || true 1>/dev/null
-echo running: splunk-appinspect inspect $SCAN --output-file $INPUT_RESULT_FILE --mode test $INCLUDED_TAGS $EXCLUDED_TAGS
-splunk-appinspect inspect $SCAN --output-file $INPUT_RESULT_FILE --mode test $INCLUDED_TAGS $EXCLUDED_TAGS
+echo running: splunk-appinspect inspect $SCAN --output-file $INPUT_RESULT_FILE --mode test ${INCLUDED_TAGS[*]} ${EXCLUDED_TAGS[*]}
+splunk-appinspect inspect $SCAN --output-file $INPUT_RESULT_FILE --mode test "${INCLUDED_TAGS[@]}" "${EXCLUDED_TAGS[@]}"
 if [ ! -f $INPUT_RESULT_FILE ]; then echo no result file; exit 1; fi
 echo "::endgroup::"
 
